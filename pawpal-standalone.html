@@ -542,6 +542,14 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 .em-foot{position:absolute; left:0; right:0; bottom:0; padding:16px var(--pad) 30px; background:linear-gradient(180deg,rgba(192,64,43,0),var(--signal) 30%)}
 .em-foot .btn{background:rgba(255,255,255,.16); box-shadow:inset 0 0 0 1px rgba(255,255,255,.34)}
 
+/* The paw pattern is wallpaper, never a layout participant. An <svg> with no
+   width/height defaults to 300x150 and, left in flow, shoves its siblings
+   sideways, so pin it and size it explicitly wherever it is used. */
+.paws{
+  position:absolute; top:0; right:0; bottom:0; left:0; inset:0;
+  width:100%; height:100%; pointer-events:none;
+}
+
 /* --- Pet profile --- */
 .pet-hero{
   position:relative;
@@ -550,7 +558,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
   background:linear-gradient(168deg,#F2DDD6 0%,var(--clay) 58%,#DDBBB0 100%);
   overflow:hidden;
 }
-.pet-hero .paws{opacity:.09; color:#8C6357}
+/* position repeated here so it beats the .pet-hero > * rule below */
+.pet-hero .paws{position:absolute; opacity:.07; color:#8C6357}
 .pet-hero > *{position:relative}
 .pet-hero .display{font-size:38px; margin-top:16px}
 .pet-avatar{
@@ -701,12 +710,19 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 
 /* --- Sign in --- */
 .brandmark{
-  height:212px; border-radius:var(--r-card); margin-top:8px;
-  background:linear-gradient(155deg,#F0DAD2,var(--clay));
+  height:216px; border-radius:var(--r-card); margin-top:8px;
+  background:linear-gradient(155deg,#F0DAD2 0%,var(--clay) 62%,#DCB9AE 100%);
   position:relative; overflow:hidden;
-  display:flex; align-items:flex-start; justify-content:space-between; padding:22px;
+  display:flex; align-items:center; justify-content:space-between; padding:22px;
 }
-.brandmark .paws{opacity:.2; color:#8C6357}
+/* keeps the wordmark legible over the pattern */
+.brandmark::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:120px; z-index:1;
+  background:linear-gradient(180deg, rgba(231,200,190,0), rgba(233,205,196,.8) 70%, rgba(235,209,200,.95) 100%);
+}
+.brandmark .paws{opacity:.16; color:#8C6357}
+.brandmark .mark,.brandmark .chip{align-self:flex-start}
+.brandmark .wordmark{z-index:2}
 .brandmark .mark{
   position:relative; width:66px; height:66px; border-radius:21px; background:var(--pine);
   display:grid; place-items:center; color:#fff;
@@ -1383,7 +1399,7 @@ textarea.field{height:104px; padding:15px 18px; resize:none; line-height:21px; f
         </div>
 
         <div class="rise" style="--d:4"><div style="height:22px"></div>
-        <button class="btn pine" type="submit" id="signinBtn">Sign in</button></div>
+        <button class="btn pine" type="button" id="signinBtn">Sign in</button></div>
       </form>
 
       <div class="or rise" style="--d:5"><span>or continue with</span></div>
@@ -1542,7 +1558,7 @@ textarea.field{height:104px; padding:15px 18px; resize:none; line-height:21px; f
         <p class="disclaimer">Guidance only. It does not replace a veterinarian.</p>
         <form id="askForm">
           <input class="field" id="askInput" placeholder="Ask about Bruno" data-ph="askPlaceholder" autocomplete="off">
-          <button class="send" type="submit" aria-label="Send"><svg width="19" height="19"><use href="#i-up"/></svg></button>
+          <button class="send" type="button" id="askSend" aria-label="Send"><svg width="19" height="19"><use href="#i-up"/></svg></button>
         </form>
       </div>
     </section>
@@ -3063,11 +3079,13 @@ $('#revealPw').addEventListener('click', function () {
   this.setAttribute('aria-label', shown ? 'Show password' : 'Hide password');
 });
 
-$('#signinForm').addEventListener('submit', function (e) {
-  e.preventDefault();
+/* Driven by a click, not by a form submit. Some viewers open a local page
+   inside a sandbox that blocks form submission outright, and the button
+   then does nothing at all. The submit and Enter paths just call this. */
+function doSignIn() {
   var b = $('#signinBtn');
   if (b.classList.contains('working')) return;
-  var label = b.textContent;
+  var label = 'Sign in';
   b.classList.add('working');
   b.innerHTML = '<span class="spinner"></span>';
   setTimeout(function () {
@@ -3079,6 +3097,14 @@ $('#signinForm').addEventListener('submit', function (e) {
     b.classList.remove('working', 'done');
     b.textContent = label;
   }, 1750);
+}
+
+$('#signinBtn').addEventListener('click', doSignIn);
+$('#signinForm').addEventListener('submit', function (e) { e.preventDefault(); doSignIn(); });
+$$('#signinForm .field').forEach(function (f) {
+  f.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); doSignIn(); }
+  });
 });
 
 var step = 1;
@@ -3168,8 +3194,7 @@ function runAssistant(force) {
   }, reduced ? 0 : 1500));
 }
 
-$('#askForm').addEventListener('submit', function (e) {
-  e.preventDefault();
+function doAsk() {
   var v = $('#askInput').value.trim();
   if (!v) return;
   var b = document.createElement('div');
@@ -3181,6 +3206,12 @@ $('#askForm').addEventListener('submit', function (e) {
   setTimeout(function () {
     $('#s-assistant').scrollTop = $('#s-assistant').scrollHeight;
   }, 60);
+}
+
+$('#askSend').addEventListener('click', doAsk);
+$('#askForm').addEventListener('submit', function (e) { e.preventDefault(); doAsk(); });
+$('#askInput').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') { e.preventDefault(); doAsk(); }
 });
 
 /* ============================================================

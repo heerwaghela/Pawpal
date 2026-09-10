@@ -1099,11 +1099,13 @@ $('#revealPw').addEventListener('click', function () {
   this.setAttribute('aria-label', shown ? 'Show password' : 'Hide password');
 });
 
-$('#signinForm').addEventListener('submit', function (e) {
-  e.preventDefault();
+/* Driven by a click, not by a form submit. Some viewers open a local page
+   inside a sandbox that blocks form submission outright, and the button
+   then does nothing at all. The submit and Enter paths just call this. */
+function doSignIn() {
   var b = $('#signinBtn');
   if (b.classList.contains('working')) return;
-  var label = b.textContent;
+  var label = 'Sign in';
   b.classList.add('working');
   b.innerHTML = '<span class="spinner"></span>';
   setTimeout(function () {
@@ -1115,6 +1117,14 @@ $('#signinForm').addEventListener('submit', function (e) {
     b.classList.remove('working', 'done');
     b.textContent = label;
   }, 1750);
+}
+
+$('#signinBtn').addEventListener('click', doSignIn);
+$('#signinForm').addEventListener('submit', function (e) { e.preventDefault(); doSignIn(); });
+$$('#signinForm .field').forEach(function (f) {
+  f.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter') { e.preventDefault(); doSignIn(); }
+  });
 });
 
 var step = 1;
@@ -1204,8 +1214,7 @@ function runAssistant(force) {
   }, reduced ? 0 : 1500));
 }
 
-$('#askForm').addEventListener('submit', function (e) {
-  e.preventDefault();
+function doAsk() {
   var v = $('#askInput').value.trim();
   if (!v) return;
   var b = document.createElement('div');
@@ -1217,6 +1226,12 @@ $('#askForm').addEventListener('submit', function (e) {
   setTimeout(function () {
     $('#s-assistant').scrollTop = $('#s-assistant').scrollHeight;
   }, 60);
+}
+
+$('#askSend').addEventListener('click', doAsk);
+$('#askForm').addEventListener('submit', function (e) { e.preventDefault(); doAsk(); });
+$('#askInput').addEventListener('keydown', function (e) {
+  if (e.key === 'Enter') { e.preventDefault(); doAsk(); }
 });
 
 /* ============================================================

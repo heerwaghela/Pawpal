@@ -517,6 +517,14 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 .em-foot{position:absolute; left:0; right:0; bottom:0; padding:16px var(--pad) 30px; background:linear-gradient(180deg,rgba(192,64,43,0),var(--signal) 30%)}
 .em-foot .btn{background:rgba(255,255,255,.16); box-shadow:inset 0 0 0 1px rgba(255,255,255,.34)}
 
+/* The paw pattern is wallpaper, never a layout participant. An <svg> with no
+   width/height defaults to 300x150 and, left in flow, shoves its siblings
+   sideways, so pin it and size it explicitly wherever it is used. */
+.paws{
+  position:absolute; top:0; right:0; bottom:0; left:0; inset:0;
+  width:100%; height:100%; pointer-events:none;
+}
+
 /* --- Pet profile --- */
 .pet-hero{
   position:relative;
@@ -525,7 +533,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
   background:linear-gradient(168deg,#F2DDD6 0%,var(--clay) 58%,#DDBBB0 100%);
   overflow:hidden;
 }
-.pet-hero .paws{opacity:.09; color:#8C6357}
+/* position repeated here so it beats the .pet-hero > * rule below */
+.pet-hero .paws{position:absolute; opacity:.07; color:#8C6357}
 .pet-hero > *{position:relative}
 .pet-hero .display{font-size:38px; margin-top:16px}
 .pet-avatar{
@@ -676,12 +685,19 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 
 /* --- Sign in --- */
 .brandmark{
-  height:212px; border-radius:var(--r-card); margin-top:8px;
-  background:linear-gradient(155deg,#F0DAD2,var(--clay));
+  height:216px; border-radius:var(--r-card); margin-top:8px;
+  background:linear-gradient(155deg,#F0DAD2 0%,var(--clay) 62%,#DCB9AE 100%);
   position:relative; overflow:hidden;
-  display:flex; align-items:flex-start; justify-content:space-between; padding:22px;
+  display:flex; align-items:center; justify-content:space-between; padding:22px;
 }
-.brandmark .paws{opacity:.2; color:#8C6357}
+/* keeps the wordmark legible over the pattern */
+.brandmark::after{
+  content:""; position:absolute; left:0; right:0; bottom:0; height:120px; z-index:1;
+  background:linear-gradient(180deg, rgba(231,200,190,0), rgba(233,205,196,.8) 70%, rgba(235,209,200,.95) 100%);
+}
+.brandmark .paws{opacity:.16; color:#8C6357}
+.brandmark .mark,.brandmark .chip{align-self:flex-start}
+.brandmark .wordmark{z-index:2}
 .brandmark .mark{
   position:relative; width:66px; height:66px; border-radius:21px; background:var(--pine);
   display:grid; place-items:center; color:#fff;
