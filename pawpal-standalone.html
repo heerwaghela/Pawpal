@@ -441,7 +441,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
    ============================================================ */
 
 /* --- Home --- */
-.pets{display:flex; gap:14px; margin:22px 0 4px}
+.pets{display:flex; gap:14px; margin:22px 0 4px; overflow-x:auto; scrollbar-width:none; padding-bottom:2px}
+.pets::-webkit-scrollbar{display:none}
 .pet{
   border:0; background:none; cursor:pointer; padding:0;
   display:flex; flex-direction:column; align-items:center; gap:8px;
@@ -542,35 +543,60 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 .em-foot .btn{background:rgba(255,255,255,.16); box-shadow:inset 0 0 0 1px rgba(255,255,255,.34)}
 
 /* --- Pet profile --- */
-.portrait{
-  position:relative; height:424px; margin-bottom:-72px;
-  background:linear-gradient(168deg,#EFD8D0 0%,var(--clay) 55%,#DCB9AE 100%);
-  display:flex; align-items:flex-end; padding:0 var(--pad) 118px;
+.pet-hero{
+  position:relative;
+  padding:78px var(--pad) 92px;
+  display:flex; flex-direction:column; align-items:center; text-align:center;
+  background:linear-gradient(168deg,#F2DDD6 0%,var(--clay) 58%,#DDBBB0 100%);
   overflow:hidden;
 }
-/* an <svg> with no width/height defaults to 300x150, so size it explicitly */
-.paws{position:absolute; top:0; right:0; bottom:0; left:0; inset:0; width:100%; height:100%}
-.portrait .paws{opacity:.10; color:#8C6357}
-/* a scrim so the name stays legible over the pattern and the dog */
-.portrait::after{
-  content:""; position:absolute; left:0; right:0; bottom:0; height:210px;
-  background:linear-gradient(180deg, rgba(231,200,190,0) 0%, rgba(233,205,196,.75) 55%, rgba(236,212,203,.95) 100%);
-  z-index:1;
+.pet-hero .paws{opacity:.09; color:#8C6357}
+.pet-hero > *{position:relative}
+.pet-hero .display{font-size:38px; margin-top:16px}
+.pet-avatar{
+  width:132px; height:132px; border-radius:50%;
+  background:radial-gradient(circle at 50% 34%, #FFF6F2 0%, #F6E3DC 70%);
+  box-shadow:0 0 0 5px rgba(255,255,255,.62), 0 16px 34px -14px rgba(90,50,38,.55);
+  display:grid; place-items:center; overflow:hidden;
 }
-.portrait > div{position:relative; z-index:2}
-.portrait > .pill{z-index:3}
-.portrait h1{position:relative; color:var(--ink); font-size:44px}
-.portrait .tagline{position:relative; margin:2px 0 0; font-size:14px; color:rgba(23,21,15,.6); letter-spacing:-.008em}
-.pup{position:absolute; right:-34px; bottom:92px; width:226px; height:198px}
+.pet-avatar svg{width:118px; height:104px; margin-top:6px}
+
+.icon-btn{
+  position:absolute; top:62px; right:20px; z-index:3;
+  width:40px; height:40px; border-radius:50%; border:0; cursor:pointer;
+  background:rgba(255,255,255,.74); color:var(--ink);
+  display:grid; place-items:center;
+  transition:transform var(--t-tap) var(--spring), background var(--t-el) var(--ease);
+}
+.icon-btn:hover{background:#fff}
+.icon-btn:active{transform:scale(.9)}
+
+/* breed / sex / age, as separated facts rather than a run-on line */
+.chip-line{
+  display:flex; flex-wrap:wrap; justify-content:center; align-items:center;
+  gap:0; margin:9px 0 0; font-size:13.5px; color:rgba(23,21,15,.62); letter-spacing:-.006em;
+}
+.chip-line span{padding:0 11px; position:relative}
+.chip-line span + span::before{
+  content:""; position:absolute; left:0; top:50%; margin-top:-2px;
+  width:3px; height:3px; border-radius:50%; background:rgba(23,21,15,.32);
+}
+
 .stat-card{
-  position:relative; z-index:2; margin:0 var(--pad);
+  position:relative; z-index:2; margin:-56px var(--pad) 0;
   display:flex; background:var(--paper); border-radius:var(--r-card);
   box-shadow:var(--shadow-lift); padding:20px 0;
 }
-.stat{flex:1; text-align:center}
+.stat{flex:1; text-align:center; min-width:0; padding:0 6px}
 .stat + .stat{border-left:1px solid var(--mist)}
-.stat .figure{font-size:29px; display:block}
+.stat .figure{font-size:29px; display:block; line-height:1.1}
+.stat .figure.fit{
+  font-size:23px; white-space:nowrap; overflow:hidden; text-overflow:ellipsis;
+  display:block;
+}
 .stat .eyebrow{margin-top:5px}
+
+.section-gap{margin-top:30px}
 
 .link-grid{display:grid; grid-template-columns:1fr 1fr; gap:11px; margin-top:14px}
 .link-card{
@@ -687,7 +713,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
   box-shadow:0 10px 24px -10px rgba(35,55,43,.7);
 }
 .brandmark .chip{
-  position:relative; display:inline-flex; align-items:center; gap:8px;
+  position:relative; display:inline-flex; align-items:center; gap:8px; white-space:nowrap;
   height:36px; padding:0 15px; border-radius:999px; background:rgba(255,255,255,.72);
   font-size:11px; font-weight:600; letter-spacing:.11em; text-transform:uppercase; color:var(--ink);
 }
@@ -826,6 +852,134 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 .grid-overlay.on{opacity:1}
 
 @media (max-height:900px){ .caption{display:none} }
+
+
+/* ============================================================
+   Onboarding inputs
+   ============================================================ */
+
+.field-pair{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+.field-pair .field{width:100%}
+.field-pair .form-label{margin-top:18px}
+
+/* scoped to .chip-row so it never touches the .chip badge on the sign-in art */
+.chip-row{display:flex; flex-wrap:wrap; gap:9px}
+.chip-row .chip{
+  height:44px; padding:0 17px; border-radius:14px; cursor:pointer;
+  border:1.5px solid var(--mist); background:var(--paper); color:var(--ink);
+  font-family:var(--ui); font-size:14.5px; font-weight:500; letter-spacing:-.011em; white-space:nowrap;
+  transition:border-color var(--t-el) var(--ease), background var(--t-el) var(--ease), transform var(--t-tap) var(--spring), color var(--t-el) var(--ease);
+}
+.chip-row .chip:active{transform:scale(.95)}
+.chip-row .chip.on{border-color:var(--pine); background:var(--pine); color:#fff}
+
+/* ============================================================
+   Bottom sheet
+   ============================================================ */
+
+.scrim{
+  position:absolute; top:0; right:0; bottom:0; left:0; inset:0; z-index:100;
+  background:rgba(23,21,15,.42);
+  opacity:0; pointer-events:none;
+  transition:opacity 320ms var(--ease);
+  backdrop-filter:blur(2px); -webkit-backdrop-filter:blur(2px);
+}
+.scrim.on{opacity:1; pointer-events:auto}
+
+.sheet{
+  position:absolute; left:0; right:0; bottom:0; z-index:101;
+  max-height:80%;
+  background:var(--bone);
+  border-radius:var(--r-sheet) var(--r-sheet) 0 0;
+  box-shadow:0 -14px 44px -18px rgba(23,21,15,.5);
+  transform:translateY(102%);
+  transition:transform 420ms var(--ease);
+  display:flex; flex-direction:column;
+  padding-bottom:26px;
+}
+.sheet.on{transform:none}
+.sheet .grabber{
+  width:40px; height:4px; border-radius:3px; background:var(--mist);
+  margin:10px auto 4px; flex:0 0 auto;
+}
+.sheet-scroll{padding:8px var(--pad) 0; overflow-y:auto; scrollbar-width:none}
+.sheet-scroll::-webkit-scrollbar{display:none}
+.sheet h3{
+  font-family:var(--display); font-size:25px; margin:6px 0 0; letter-spacing:-.014em;
+  font-variation-settings:"opsz" 90,"SOFT" 46,"WONK" 1;
+}
+.sheet .sub{margin:6px 0 0; font-size:14.5px; color:var(--slate); letter-spacing:-.008em}
+.sheet .form-label{margin:18px 0 8px}
+.sheet .btn{margin-top:22px}
+.sheet .btn + .btn{margin-top:10px}
+
+/* the amount readout on the expense sheet */
+.amount{
+  display:flex; align-items:baseline; justify-content:center; gap:2px;
+  margin:20px 0 4px; font-family:var(--display); letter-spacing:-.02em;
+  font-variation-settings:"opsz" 144,"SOFT" 30,"WONK" 0;
+  font-variant-numeric:tabular-nums;
+}
+.amount .cur{font-size:30px; color:var(--slate)}
+.amount .val{font-size:56px; line-height:1}
+.amount.pulse{animation:amountPop 340ms var(--spring)}
+
+.keypad{display:grid; grid-template-columns:repeat(3,1fr); gap:9px; margin-top:16px}
+.keypad button{
+  height:52px; border-radius:14px; border:0; cursor:pointer;
+  background:var(--paper); box-shadow:var(--shadow-card);
+  font-family:var(--ui); font-size:19px; font-weight:600; color:var(--ink);
+  letter-spacing:-.01em;
+  transition:transform var(--t-tap) var(--spring), background var(--t-el) var(--ease);
+}
+.keypad button:active{transform:scale(.94); background:#F1ECE1}
+.keypad button.wide{grid-column:span 2}
+
+/* a stepper for grams and kilograms */
+.stepper{
+  display:flex; align-items:center; justify-content:space-between;
+  background:var(--paper); border-radius:18px; box-shadow:var(--shadow-card);
+  padding:12px 14px; margin-top:16px;
+}
+.stepper button{
+  width:46px; height:46px; border-radius:50%; border:0; cursor:pointer;
+  background:var(--bone); color:var(--ink); display:grid; place-items:center;
+  transition:transform var(--t-tap) var(--spring), background var(--t-el) var(--ease);
+}
+.stepper button:hover{background:#EDE7DA}
+.stepper button:active{transform:scale(.88)}
+.stepper .read{
+  font-family:var(--display); font-size:34px; letter-spacing:-.02em;
+  font-variant-numeric:tabular-nums;
+  font-variation-settings:"opsz" 120,"SOFT" 30,"WONK" 0;
+}
+.stepper .read small{font-family:var(--ui); font-size:14px; color:var(--slate); margin-left:5px; letter-spacing:-.008em}
+
+/* option list inside a sheet */
+.opt{
+  display:flex; align-items:center; gap:13px; width:100%;
+  padding:15px 17px; margin-top:10px; cursor:pointer; text-align:left;
+  border-radius:16px; border:1.5px solid var(--mist); background:var(--paper);
+  font-family:var(--ui); font-size:15.5px; font-weight:500; letter-spacing:-.012em; color:var(--ink);
+  transition:border-color var(--t-el) var(--ease), transform var(--t-tap) var(--spring);
+}
+.opt:active{transform:scale(.985)}
+.opt.on{border-color:var(--pine)}
+.opt .swatch{width:12px; height:12px; border-radius:4px; flex:0 0 auto}
+.opt .tick{margin-left:auto; color:var(--pine); opacity:0; transform:scale(.4); transition:opacity var(--t-el) var(--ease), transform var(--t-el) var(--spring)}
+.opt.on .tick{opacity:1; transform:scale(1)}
+.opt .sub2{margin-left:auto; font-size:13.5px; color:var(--slate); font-weight:400}
+
+textarea.field{height:104px; padding:15px 18px; resize:none; line-height:21px; font-family:var(--ui)}
+
+/* a count that just changed gives a small nudge */
+.acts b.bump{animation:amountPop 420ms var(--spring)}
+.acts button.liked{color:var(--pine); font-weight:600}
+
+.btn[disabled]{opacity:.42; cursor:not-allowed; transform:none}
+.btn[disabled]:active{transform:none}
+
+.post.landed{animation:rise 560ms var(--ease) both}
 /* ============================================================
    PawPal — motion
    Screen transitions, staggered entrances, ambient loops.
@@ -974,15 +1128,31 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
   to{transform:translate3d(-64px,-64px,0)}
 }
 
-/* selectors target the original in <defs>: a <use> shadow tree clones the
-   computed style, so every instance of the dog animates from these rules */
-#pup .tail{transform-origin:40px 132px; animation:wag 1.5s infinite var(--ease)}
+/* Selectors target the originals in <defs>: a <use> shadow tree clones the
+   computed style, so every drawing of the pet animates from these rules.
+   Each species has its own ear anchor, so the flop pivots where it should. */
+.pet-art .tail{transform-origin:40px 132px; animation:wag 1.5s infinite var(--ease)}
 @keyframes wag{0%,100%{transform:rotate(-9deg)} 50%{transform:rotate(13deg)}}
-#pup .ear-l{transform-origin:110px 62px; transform:rotate(-11deg); animation:earflopL 4.2s infinite var(--ease)}
-#pup .ear-r{transform-origin:196px 64px; transform:rotate(9deg); animation:earflopR 4.2s .3s infinite var(--ease)}
-@keyframes earflopL{0%,88%,100%{transform:rotate(-11deg)} 94%{transform:rotate(-19deg)}}
-@keyframes earflopR{0%,88%,100%{transform:rotate(9deg)} 94%{transform:rotate(17deg)}}
-#pup .lid{animation:blink 5.4s infinite}
+
+#pup-dog .ear-l{transform-origin:110px 62px; transform:rotate(-11deg); animation:earDogL 4.2s infinite var(--ease)}
+#pup-dog .ear-r{transform-origin:196px 64px; transform:rotate(9deg); animation:earDogR 4.2s .3s infinite var(--ease)}
+@keyframes earDogL{0%,88%,100%{transform:rotate(-11deg)} 94%{transform:rotate(-19deg)}}
+@keyframes earDogR{0%,88%,100%{transform:rotate(9deg)} 94%{transform:rotate(17deg)}}
+
+#pup-cat .ear-l{transform-origin:130px 54px; animation:earTwitchL 5s infinite var(--ease)}
+#pup-cat .ear-r{transform-origin:174px 54px; animation:earTwitchR 5s .4s infinite var(--ease)}
+@keyframes earTwitchL{0%,90%,100%{transform:none} 95%{transform:rotate(-9deg)}}
+@keyframes earTwitchR{0%,90%,100%{transform:none} 95%{transform:rotate(9deg)}}
+
+#pup-rabbit .ear-l{transform-origin:128px 70px; transform:rotate(-9deg); animation:earBunL 4.6s infinite var(--ease)}
+#pup-rabbit .ear-r{transform-origin:178px 70px; transform:rotate(9deg); animation:earBunR 4.6s .5s infinite var(--ease)}
+@keyframes earBunL{0%,84%,100%{transform:rotate(-9deg)} 90%{transform:rotate(-20deg)} 95%{transform:rotate(-5deg)}}
+@keyframes earBunR{0%,84%,100%{transform:rotate(9deg)} 90%{transform:rotate(20deg)} 95%{transform:rotate(5deg)}}
+
+#pup-bird .wing{animation:flap 3.4s infinite var(--ease)}
+@keyframes flap{0%,86%,100%{transform:none} 91%{transform:rotate(-16deg)} 96%{transform:rotate(4deg)}}
+
+.pet-art .lid{animation:blink 5.4s infinite}
 @keyframes blink{0%,96%,100%{transform:scaleY(0)} 98%{transform:scaleY(1)}}
 
 .poster{animation:none}
@@ -996,6 +1166,15 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 .btn.working{width:56px; min-width:56px; padding:0; margin:0 auto; display:flex; transition:width 380ms var(--ease)}
 .btn .spinner{width:22px;height:22px;border-radius:50%;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;animation:spin 700ms linear infinite}
 .btn.done{background:var(--pine)}
+
+@keyframes amountPop{from{transform:scale(.9)} to{transform:scale(1)}}
+
+/* a row that was just added by the user lands rather than appears */
+@keyframes landRow{
+  from{opacity:0; transform:translateY(-10px); background:rgba(232,163,61,.18)}
+  to{opacity:1; transform:none; background:transparent}
+}
+.row.landed,.vax-item.landed,.entry.landed{animation:landRow 620ms var(--ease) both}
 
 /* ---------- honour the setting ---------- */
 
@@ -1030,7 +1209,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
     </g>
   </pattern>
 
-  <g id="pup">
+  <!-- Four animals on one skeleton: same body, head, eyes and tail anchor, so a
+       single set of animation rules drives whichever species the owner picked. -->
+  <g id="pup-dog" class="pet-art">
     <path class="tail" d="M40 132C20 122 14 100 24 84" fill="none" stroke="#C08E7D" stroke-width="11" stroke-linecap="round"/>
     <ellipse cx="110" cy="150" rx="72" ry="44" fill="#D9AFA1"/>
     <ellipse cx="104" cy="166" rx="30" ry="26" fill="#F3E4DD"/>
@@ -1044,6 +1225,55 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
     <rect class="lid" x="164" y="78" width="12" height="11" rx="5" fill="#D9AFA1" style="transform-origin:170px 78px"/>
     <ellipse cx="152" cy="108" rx="8" ry="5.6" fill="#4A342C"/>
     <path d="M152 114v5M152 119c-3.5 3.5-9 2.5-10-1M152 119c3.5 3.5 9 2.5 10-1" stroke="#4A342C" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <g id="pup-cat" class="pet-art">
+    <path class="tail" d="M40 132C14 126 6 96 26 78 38 67 52 74 50 86" fill="none" stroke="#B8ADA0" stroke-width="10" stroke-linecap="round"/>
+    <ellipse cx="110" cy="150" rx="70" ry="43" fill="#CFC5B7"/>
+    <ellipse cx="104" cy="166" rx="28" ry="24" fill="#F1EDE5"/>
+    <g class="ear-l"><path d="M116 62 106 16 148 42Z" fill="#B8ADA0"/><path d="M120 58 114 30 138 45Z" fill="#E8C9C0"/></g>
+    <g class="ear-r"><path d="M188 62 198 16 156 42Z" fill="#B8ADA0"/><path d="M184 58 190 30 166 45Z" fill="#E8C9C0"/></g>
+    <circle cx="152" cy="90" r="46" fill="#CFC5B7"/>
+    <ellipse cx="152" cy="114" rx="22" ry="15" fill="#F1EDE5"/>
+    <ellipse cx="136" cy="84" rx="4.6" ry="6.4" fill="#3E4A3C"/>
+    <ellipse cx="170" cy="84" rx="4.6" ry="6.4" fill="#3E4A3C"/>
+    <rect class="lid" x="130" y="76" width="12" height="12" rx="5" fill="#CFC5B7" style="transform-origin:136px 76px"/>
+    <rect class="lid" x="164" y="76" width="12" height="12" rx="5" fill="#CFC5B7" style="transform-origin:170px 76px"/>
+    <path d="M145 106h14l-7 7Z" fill="#D08C86"/>
+    <path d="M152 113v5M152 118c-3 3-8 2-9-1M152 118c3 3 8 2 9-1" stroke="#3E4A3C" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <path d="M126 104 100 99M126 110 101 112M178 104 204 99M178 110 203 112" stroke="#8C8272" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+
+  <g id="pup-rabbit" class="pet-art">
+    <circle class="tail" cx="42" cy="140" r="15" fill="#F1E7E2"/>
+    <ellipse cx="112" cy="152" rx="66" ry="42" fill="#D8CBC6"/>
+    <ellipse cx="106" cy="166" rx="26" ry="23" fill="#F5EEEB"/>
+    <g class="ear-l"><ellipse cx="128" cy="30" rx="13" ry="44" fill="#D8CBC6"/><ellipse cx="128" cy="34" rx="6.5" ry="34" fill="#EBC8C2"/></g>
+    <g class="ear-r"><ellipse cx="178" cy="30" rx="13" ry="44" fill="#D8CBC6"/><ellipse cx="178" cy="34" rx="6.5" ry="34" fill="#EBC8C2"/></g>
+    <circle cx="152" cy="96" r="44" fill="#D8CBC6"/>
+    <ellipse cx="152" cy="118" rx="21" ry="14" fill="#F5EEEB"/>
+    <circle cx="137" cy="90" r="5" fill="#4A3C3C"/>
+    <circle cx="168" cy="90" r="5" fill="#4A3C3C"/>
+    <rect class="lid" x="131" y="84" width="12" height="11" rx="5" fill="#D8CBC6" style="transform-origin:137px 84px"/>
+    <rect class="lid" x="162" y="84" width="12" height="11" rx="5" fill="#D8CBC6" style="transform-origin:168px 84px"/>
+    <path d="M146 110h13l-6.5 6Z" fill="#C98A86"/>
+    <path d="M152 116v4M152 120c-3 3-8 2-9-1M152 120c3 3 8 2 9-1" stroke="#4A3C3C" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <path d="M148 126h9" stroke="#C98A86" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+
+  <g id="pup-bird" class="pet-art">
+    <path class="tail" d="M46 138C24 148 12 168 16 182 30 180 44 168 52 154" fill="#A8B79F"/>
+    <ellipse cx="118" cy="140" rx="62" ry="52" fill="#BCCBB2"/>
+    <ellipse cx="112" cy="156" rx="26" ry="28" fill="#EFF3EA"/>
+    <path class="wing" d="M96 118C74 122 62 142 70 162 84 158 96 142 100 126Z" fill="#A8B79F" style="transform-origin:98px 120px"/>
+    <circle cx="152" cy="84" r="42" fill="#BCCBB2"/>
+    <circle cx="139" cy="78" r="5" fill="#37402F"/>
+    <circle cx="170" cy="78" r="5" fill="#37402F"/>
+    <rect class="lid" x="133" y="72" width="12" height="11" rx="5" fill="#BCCBB2" style="transform-origin:139px 72px"/>
+    <rect class="lid" x="164" y="72" width="12" height="11" rx="5" fill="#BCCBB2" style="transform-origin:170px 72px"/>
+    <path d="M150 92 186 100 150 110Z" fill="#E8A33D"/>
+    <path d="M138 44c4-12 18-16 26-10" stroke="#A8B79F" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <path d="M124 186h16M148 186h16" stroke="#E8A33D" stroke-width="4" stroke-linecap="round"/>
   </g>
 
   <g id="i-home" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -1149,7 +1379,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 
         <div class="signin-foot rise" style="--d:3">
           <label class="check"><input type="checkbox" checked><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.6 4.5L19 7"/></svg></span>Keep me signed in</label>
-          <button class="link" type="button" data-toast="We sent a reset link to aarav@pawpal.in">Forgot password?</button>
+          <button class="link" type="button" data-sheet="forgot">Forgot password?</button>
         </div>
 
         <div class="rise" style="--d:4"><div style="height:22px"></div>
@@ -1170,27 +1400,56 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
         <h1 class="display rise" style="--d:1; margin-top:26px">Who are we<br>caring for?</h1>
         <p class="subhead rise" style="--d:2">You can add the rest of the family later.</p>
         <div class="rise" style="--d:3; margin-top:24px">
-          <button class="choice on" data-pick="species"><span class="em">&#128021;</span>Dog<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
-          <button class="choice" data-pick="species"><span class="em">&#128008;</span>Cat<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
-          <button class="choice" data-pick="species"><span class="em">&#128048;</span>Rabbit<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
-          <button class="choice" data-pick="species"><span class="em">&#129417;</span>Bird<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
+          <button class="choice on" data-pick="species" data-species="dog"><span class="em">&#128021;</span>Dog<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
+          <button class="choice" data-pick="species" data-species="cat"><span class="em">&#128008;</span>Cat<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
+          <button class="choice" data-pick="species" data-species="rabbit"><span class="em">&#128048;</span>Rabbit<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
+          <button class="choice" data-pick="species" data-species="bird"><span class="em">&#129417;</span>Bird<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
         </div>
       </div>
 
       <div class="step" data-step="2">
-        <h1 class="display" style="margin-top:26px">Tell us about<br>your dog</h1>
-        <p class="subhead">We use this to size meals and doses.</p>
-        <label class="form-label eyebrow" for="petname">Name</label>
-        <input class="field" id="petname" value="Bruno">
+        <h1 class="display" style="margin-top:26px">Tell us about<br>your <span data-bind="species">dog</span></h1>
+        <p class="subhead">Everything on this screen shows up across the app.</p>
+
+        <div class="field-pair">
+          <div>
+            <label class="form-label eyebrow" for="petname">Pet&rsquo;s name</label>
+            <input class="field" id="petname" value="Bruno" autocomplete="off" maxlength="18">
+          </div>
+          <div>
+            <label class="form-label eyebrow" for="ownername">Your name</label>
+            <input class="field" id="ownername" value="Aarav" autocomplete="off" maxlength="18">
+          </div>
+        </div>
+
+        <div class="field-pair">
+          <div>
+            <label class="form-label eyebrow" for="breed">Breed</label>
+            <input class="field" id="breed" value="Indie" autocomplete="off" maxlength="20">
+          </div>
+          <div>
+            <label class="form-label eyebrow" for="weight">Weight (kg)</label>
+            <input class="field" id="weight" type="number" step="0.1" min="0.2" max="90" value="18.4">
+          </div>
+        </div>
+
         <label class="form-label eyebrow">Age</label>
-        <button class="choice" data-pick="age"><span class="em">&#127874;</span>Under 1 year<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
-        <button class="choice on" data-pick="age"><span class="em">&#127874;</span>1 to 7 years<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
-        <button class="choice" data-pick="age"><span class="em">&#127874;</span>Over 7 years<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
+        <div class="chip-row">
+          <button class="chip" data-pick="age" data-age="Under 1" data-years="0.6">Under 1 year</button>
+          <button class="chip on" data-pick="age" data-age="4 yr" data-years="4">1 to 7 years</button>
+          <button class="chip" data-pick="age" data-age="9 yr" data-years="9">Over 7 years</button>
+        </div>
+
+        <label class="form-label eyebrow">Sex</label>
+        <div class="chip-row">
+          <button class="chip on" data-pick="sex" data-sex="male">Male</button>
+          <button class="chip" data-pick="sex" data-sex="female">Female</button>
+        </div>
       </div>
 
       <div class="step" data-step="3">
         <h1 class="display" style="margin-top:26px">What should<br>we remind you<br>about?</h1>
-        <p class="subhead">Each one becomes an entry on the care thread.</p>
+        <p class="subhead">Each one becomes an entry on <span data-bind="name-poss">Bruno&rsquo;s</span> care thread.</p>
         <div style="margin-top:20px">
           <button class="choice on" data-toggle="1"><span class="em">&#127859;</span>Meals<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
           <button class="choice on" data-toggle="1"><span class="em">&#128138;</span>Medicines<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
@@ -1211,20 +1470,16 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
       <div class="refresh" id="refresh"><svg width="22" height="22"><use href="#i-paw"/></svg></div>
 
       <div class="head-row">
-        <h1 class="display rise" style="--d:0">Good morning,<br>Aarav</h1>
+        <h1 class="display rise" style="--d:0"><span data-bind="greeting">Good morning</span>,<br><span data-bind="owner">Aarav</span></h1>
         <button class="pill alarm rise" style="--d:1" data-emergency><span class="beacon"></span>Emergency</button>
       </div>
-      <p class="subhead rise" style="--d:1">Thursday, 21 August</p>
+      <p class="subhead rise" style="--d:1" data-bind="today">Thursday, 21 August</p>
 
-      <div class="pets rise" style="--d:2">
-        <button class="pet on" data-pet="Bruno"><span class="ring" style="background:linear-gradient(150deg,#EFD8D0,#E7C8BE)"><svg width="30" height="30" viewBox="60 40 190 170"><use href="#pup"/></svg></span>Bruno</button>
-        <button class="pet" data-pet="Mishti"><span class="ring" style="background:linear-gradient(150deg,#DCE4DA,#C9D6C6)"><svg width="26" height="26" style="color:#5B6B58"><use href="#i-paw"/></svg></span>Mishti</button>
-        <button class="pet" data-toast="Add a second pet to this thread"><span class="ring add"><svg width="20" height="20"><use href="#i-plus"/></svg></span>Add</button>
-      </div>
+      <div class="pets rise" style="--d:2" id="petRow"></div>
 
       <button class="ask rise" style="--d:3" data-go="s-assistant">
         <span class="spark"><svg width="18" height="18"><use href="#i-paw"/></svg></span>
-        How is Bruno today?
+        How is <span data-bind="name">Bruno</span> today?
       </button>
 
       <div class="thread-head rise" style="--d:4">
@@ -1256,29 +1511,29 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
     <section class="screen" id="s-assistant" data-name="AI Assistant &middot; structured answers" data-tab="chat" style="padding-bottom:178px">
       <div class="head-row rise" style="--d:0">
         <h1 class="display">Assistant</h1>
-        <button class="link" style="color:var(--slate); font-weight:400; font-size:15px" data-go="s-profile">About Bruno</button>
+        <button class="link" style="color:var(--slate); font-weight:400; font-size:15px" data-go="s-profile">About <span data-bind="name">Bruno</span></button>
       </div>
 
       <div id="thread-chat">
-        <div class="bubble-me rise" style="--d:1">He&rsquo;s been off his food since last night and slept most of today.</div>
+        <div class="bubble-me rise" style="--d:1"><span data-bind="They">He</span> has been off <span data-bind="their">his</span> food since last night and slept most of today.</div>
         <p class="eyebrow rise" style="--d:2" id="assistantLabel" hidden>Assistant</p>
         <div class="typing rise" id="typing" style="--d:2"><i></i><i></i><i></i></div>
 
         <div class="card answer" id="answer" hidden>
           <div class="part" style="--d:0">
             <p class="eyebrow">What it might be</p>
-            <p>Reduced appetite with low energy for under 24 hours is often a mild stomach upset. Bruno is also on day 4 of carprofen, which can put dogs off food.</p>
+            <p>Reduced appetite with low energy for under 24 hours is often a mild stomach upset. <span data-bind="name">Bruno</span> is also on day 4 of carprofen, which can put <span data-bind="speciesPlural">dogs</span> off food.</p>
           </div>
           <div class="part" style="--d:1">
             <p class="eyebrow">What to do now</p>
-            <p>Offer plain boiled rice and chicken in small portions. Keep water available and give the 2 pm tablet with food, not on an empty stomach. Note how much he eats tonight.</p>
+            <p>Offer plain boiled rice and chicken in small portions. Keep water available and give the 2 pm tablet with food, not on an empty stomach. Note how much <span data-bind="they">he</span> eats tonight.</p>
           </div>
           <div class="part" style="--d:2">
             <p class="eyebrow">When to see a vet</p>
-            <p>If he refuses food for another 24 hours, vomits more than twice, or the gums look pale, call Dr. Menon the same day.</p>
+            <p>If <span data-bind="they">he</span> refuses food for another 24 hours, vomits more than twice, or the gums look pale, call Dr. Menon the same day.</p>
           </div>
           <div class="part" style="--d:3">
-            <button class="btn ghost" data-toast="Added to the care thread &middot; 11:24 am">Log this in the thread</button>
+            <button class="btn ghost" data-log-thread="1">Log this in the thread</button>
           </div>
         </div>
       </div>
@@ -1286,7 +1541,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
       <div class="composer">
         <p class="disclaimer">Guidance only. It does not replace a veterinarian.</p>
         <form id="askForm">
-          <input class="field" id="askInput" placeholder="Ask about Bruno" autocomplete="off">
+          <input class="field" id="askInput" placeholder="Ask about Bruno" data-ph="askPlaceholder" autocomplete="off">
           <button class="send" type="submit" aria-label="Send"><svg width="19" height="19"><use href="#i-up"/></svg></button>
         </form>
       </div>
@@ -1298,20 +1553,20 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
         <p class="eyebrow">Emergency</p>
         <button class="em-close" data-back>Close</button>
       </div>
-      <h1 class="display rise" style="--d:1; margin-top:22px">Bruno needs<br>a vet now</h1>
-      <p class="subhead rise" style="--d:2">Sharing his records and your location with whoever answers.</p>
+      <h1 class="display rise" style="--d:1; margin-top:22px"><span data-bind="name">Bruno</span> needs<br>a vet now</h1>
+      <p class="subhead rise" style="--d:2">Sharing <span data-bind="their">his</span> records and your location with whoever answers.</p>
 
-      <button class="call rise" style="--d:3" data-toast="Calling City Pet Hospital&hellip;">
+      <button class="call rise" style="--d:3" data-call="City Pet Hospital">
         <svg width="21" height="21"><use href="#i-phone"/></svg>Call City Pet Hospital</button>
 
       <div class="rows rise" style="--d:4">
-        <button class="row" data-toast="Calling City Pet Hospital&hellip;">
+        <button class="row" data-call="City Pet Hospital">
           <span><span class="k">City Pet Hospital</span><br><span class="v">2.4 km &middot; open 24 hours &middot; Koramangala</span></span>
           <svg class="chev" width="20" height="20"><use href="#i-chev"/></svg></button>
-        <button class="row" data-toast="Pet ambulance requested">
+        <button class="row" data-call="Pet ambulance">
           <span><span class="k">Pet ambulance</span><br><span class="v">Pickup in about 14 min</span></span>
           <svg class="chev" width="20" height="20"><use href="#i-chev"/></svg></button>
-        <button class="row" data-toast="Dr. Menon opens at 9:00 am">
+        <button class="row" data-call="Dr. Menon">
           <span><span class="k">Dr. Menon &middot; your vet</span><br><span class="v">Closed now &middot; opens 9:00 am</span></span>
           <svg class="chev" width="20" height="20"><use href="#i-chev"/></svg></button>
       </div>
@@ -1319,8 +1574,8 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
       <div class="vitals rise" style="--d:5">
         <p class="eyebrow">Read this to the vet</p>
         <dl>
-          <dt>Weight</dt><dd>18.4 kg</dd>
-          <dt>Allergies</dt><dd>Chicken, dust mites</dd>
+          <dt>Weight</dt><dd><span data-bind="weight">18.4</span> kg</dd>
+          <dt>Allergies</dt><dd data-bind="allergies">Chicken, dust mites</dd>
           <dt>Blood group</dt><dd>DEA 1.1 negative</dd>
           <dt>On medication</dt><dd>Carprofen, day 4</dd>
           <dt>Microchip</dt><dd class="num">985 141 000 273 118</dd>
@@ -1335,47 +1590,58 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 
     <!-- ========== PET PROFILE ========== -->
     <section class="screen flush edge has-tabs" id="s-profile" data-name="Pet profile &middot; dossier" data-tab="person">
-      <div class="portrait bleed">
+
+      <header class="pet-hero bleed">
         <svg class="paws" aria-hidden="true"><rect width="100%" height="100%" fill="url(#pawpat)"/></svg>
-        <svg class="pup" viewBox="0 0 240 200"><use href="#pup"/></svg>
-        <button class="pill" style="position:absolute; top:62px; right:22px; background:rgba(255,255,255,.72); border-color:transparent" data-go="s-settings">
-          <svg width="17" height="17"><use href="#i-gear"/></svg>Settings</button>
-        <div>
-          <h1 class="display portrait-name rise" style="--d:0; font-size:44px">Bruno</h1>
-          <p class="tagline rise" style="--d:1">Indie &middot; male &middot; with you since March 2022</p>
+        <button class="icon-btn" data-go="s-settings" aria-label="Settings">
+          <svg width="19" height="19"><use href="#i-gear"/></svg></button>
+
+        <div class="pet-avatar rise" style="--d:0">
+          <svg viewBox="20 10 210 180"><use class="pet-use" href="#pup-dog"/></svg>
         </div>
+        <h1 class="display rise" style="--d:1" data-bind="name">Bruno</h1>
+        <p class="chip-line rise" style="--d:2">
+          <span data-bind="breed">Indie</span>
+          <span data-bind="sex">Male</span>
+          <span data-bind="age">4 yr</span>
+        </p>
+      </header>
+
+      <div class="stat-card bleed rise" style="--d:3">
+        <div class="stat"><span class="figure" data-count="4" data-suffix=" yr" data-bind-count="years">4 yr</span><p class="eyebrow">Age</p></div>
+        <div class="stat"><span class="figure" data-count="18.4" data-dec="1" data-bind-count="weight">18.4</span><p class="eyebrow">kg</p></div>
+        <div class="stat"><span class="figure fit" data-bind="breed">Indie</span><p class="eyebrow">Breed</p></div>
       </div>
 
-      <div class="stat-card bleed rise" style="--d:2">
-        <div class="stat"><span class="figure" data-count="4" data-suffix=" yr">4 yr</span><p class="eyebrow">Age</p></div>
-        <div class="stat"><span class="figure" data-count="18.4" data-dec="1">18.4</span><p class="eyebrow">kg</p></div>
-        <div class="stat"><span class="figure">Indie</span><p class="eyebrow">Breed</p></div>
-      </div>
-
-      <p class="eyebrow rise" style="--d:3; margin-top:30px">Vitals on file</p>
-      <div class="rows rise" style="--d:3">
-        <div class="row"><span class="k">Allergies</span><span class="v">Chicken, dust mites</span></div>
-        <div class="row"><span class="k">Blood group</span><span class="v">DEA 1.1 negative</span></div>
-        <div class="row"><span class="k">Microchip</span><span class="v num">985 141 000 273 118</span></div>
-        <div class="row"><span class="k">Insurance</span><span class="v">Bajaj &middot; valid to Mar 2027</span></div>
-        <div class="row"><span class="k">Neutered</span><span class="v">Yes &middot; Jan 2023</span></div>
-      </div>
-
-      <p class="eyebrow rise" style="--d:4; margin-top:30px">Care</p>
+      <p class="eyebrow section-gap rise" style="--d:4">Care</p>
       <div class="link-grid rise" style="--d:4">
         <button class="link-card" data-go="s-vaccines"><svg class="ic"><use href="#i-vax"/></svg><b>Vaccinations</b><span>One due in 7 days</span></button>
         <button class="link-card" data-go="s-records"><svg class="ic"><use href="#i-file"/></svg><b>Records</b><span>9 on file</span></button>
-        <button class="link-card" data-go="s-feeding"><svg class="ic"><use href="#i-bowl"/></svg><b>Feeding</b><span>360 g per day</span></button>
-        <button class="link-card" data-go="s-growth"><svg class="ic"><use href="#i-trend"/></svg><b>Growth</b><span>18.4 kg, steady</span></button>
-        <button class="link-card" data-go="s-spending"><svg class="ic"><use href="#i-coin"/></svg><b>Spending</b><span>&#8377;2,840 in August</span></button>
+        <button class="link-card" data-go="s-feeding"><svg class="ic"><use href="#i-bowl"/></svg><b>Feeding</b><span><span data-bind="grams">360</span> g per day</span></button>
+        <button class="link-card" data-go="s-growth"><svg class="ic"><use href="#i-trend"/></svg><b>Growth</b><span><span data-bind="weight">18.4</span> kg, steady</span></button>
+        <button class="link-card" data-go="s-spending"><svg class="ic"><use href="#i-coin"/></svg><b>Spending</b><span>&#8377;<span data-bind="spend">2,840</span> in August</span></button>
         <button class="link-card alarm" data-go="s-poster"><svg class="ic"><use href="#i-poster"/></svg><b>Lost poster</b><span>Ready to share</span></button>
       </div>
 
-      <p class="eyebrow rise" style="--d:5; margin-top:30px">Medical history</p>
+      <p class="eyebrow section-gap rise" style="--d:5">Vitals on file</p>
       <div class="rows rise" style="--d:5">
-        <div class="row"><span class="k">14 Aug</span><span class="v">Annual check &middot; all clear</span></div>
-        <div class="row"><span class="k">02 Jun</span><span class="v">Tick fever &middot; full recovery</span></div>
+        <button class="row" data-sheet="allergies"><span class="k">Allergies</span><span class="v" data-bind="allergies">Chicken, dust mites</span></button>
+        <div class="row"><span class="k">Blood group</span><span class="v">DEA 1.1 negative</span></div>
+        <div class="row"><span class="k">Microchip</span><span class="v num">985 141 000 273 118</span></div>
+        <div class="row"><span class="k">Insurance</span><span class="v">Bajaj &middot; valid to Mar 2027</span></div>
+        <div class="row"><span class="k">With you since</span><span class="v" data-bind="since">March 2022</span></div>
+      </div>
+
+      <p class="eyebrow section-gap rise" style="--d:6">Medical history</p>
+      <div class="rows rise" style="--d:6">
+        <div class="row"><span class="k">14 Aug 2026</span><span class="v">Annual check &middot; all clear</span></div>
+        <div class="row"><span class="k">02 Jun 2026</span><span class="v">Tick fever &middot; full recovery</span></div>
         <div class="row"><span class="k">09 Aug 2025</span><span class="v">Rabies + DHPPi booster</span></div>
+      </div>
+
+      <div class="rise" style="--d:7; margin-top:24px">
+        <button class="btn ghost" data-sheet="edit-pet">
+          <svg width="18" height="18"><use href="#i-gear"/></svg>Edit <span data-bind="name">Bruno</span>&rsquo;s details</button>
       </div>
     </section>
 
@@ -1383,7 +1649,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
     <section class="screen" id="s-vaccines" data-name="Vaccination tracker &middot; timeline" data-tab="">
       <div class="navbar rise" style="--d:0">
         <button class="back" data-back aria-label="Back"><svg width="22" height="22"><use href="#i-back"/></svg></button>
-        <span class="crumb">Bruno &middot; care</span>
+        <span class="crumb"><span data-bind="name">Bruno</span> &middot; care</span>
       </div>
       <h1 class="display rise" style="--d:1">Vaccinations</h1>
       <p class="subhead rise" style="--d:2">One due in 7 days. Everything else is current.</p>
@@ -1397,7 +1663,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
             <h4>Rabies booster</h4>
             <p class="meta">Annual &middot; last given 30 Aug 2025</p>
             <div style="height:16px"></div>
-            <button class="btn" data-toast="Held 28 Aug, 5:30 pm at Paws Clinic">Book at Paws Clinic</button>
+            <button class="btn" data-sheet="book-vax">Book at Paws Clinic</button>
           </div>
         </div>
         <div class="vax-item" style="--d:1">
@@ -1421,7 +1687,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
     <section class="screen" id="s-records" data-name="Health records" data-tab="">
       <div class="navbar rise" style="--d:0">
         <button class="back" data-back aria-label="Back"><svg width="22" height="22"><use href="#i-back"/></svg></button>
-        <span class="crumb">Bruno &middot; care</span>
+        <span class="crumb"><span data-bind="name">Bruno</span> &middot; care</span>
       </div>
       <h1 class="display rise" style="--d:1">Records</h1>
 
@@ -1430,7 +1696,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
           <p class="eyebrow">Weight</p>
           <span class="label num">+0.3 in 6 weeks</span>
         </div>
-        <p class="figure" style="font-size:34px; margin:4px 0 0">18.4 kg</p>
+        <p class="figure" style="font-size:34px; margin:4px 0 0"><span data-bind="weight">18.4</span> kg</p>
         <svg class="chart" viewBox="0 0 300 92" preserveAspectRatio="none" style="height:92px; margin-top:14px">
           <path class="area" style="--o:1" d="M0,74 L50,68 L100,70 L150,54 L200,42 L250,32 L300,22 L300,92 L0,92 Z"/>
           <path class="line" d="M0,74 L50,68 L100,70 L150,54 L200,42 L250,32 L300,22"/>
@@ -1459,7 +1725,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
       </div>
 
       <div class="rise" style="--d:5; margin-top:24px">
-        <button class="btn ghost" data-toast="Point the camera at a prescription to file it">
+        <button class="btn ghost" data-sheet="add-record">
           <svg width="19" height="19"><use href="#i-plus"/></svg>Add record</button>
       </div>
     </section>
@@ -1468,23 +1734,23 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
     <section class="screen" id="s-feeding" data-name="Feeding planner" data-tab="">
       <div class="navbar rise" style="--d:0">
         <button class="back" data-back aria-label="Back"><svg width="22" height="22"><use href="#i-back"/></svg></button>
-        <span class="crumb">Bruno &middot; care</span>
+        <span class="crumb"><span data-bind="name">Bruno</span> &middot; care</span>
       </div>
       <h1 class="display rise" style="--d:1">Feeding</h1>
-      <p class="subhead rise" style="--d:2">For 18.4 kg, moderately active, chicken-free.</p>
+      <p class="subhead rise" style="--d:2">For <span data-bind="weight">18.4</span> kg, moderately active, chicken-free.</p>
 
       <div class="hero-figure rise" style="--d:3">
-        <span class="figure" data-count="360">360</span><span class="unit">g per day</span>
+        <span class="figure" data-count="360" data-bind-count="grams">360</span><span class="unit">g per day</span>
       </div>
-      <p class="label rise" style="--d:3">Two meals of 180 g &middot; 1,240 kcal</p>
+      <p class="label rise" style="--d:3">Two meals of <span data-bind="halfGrams">180</span> g &middot; <span data-bind="kcal">1,240</span> kcal</p>
 
       <div class="rise" style="--d:4; margin-top:28px">
-        <button class="meal given" data-meal>
-          <div class="t"><b>Breakfast</b><span>7:30 am &middot; 180 g kibble</span></div>
+        <button class="meal given" data-meal data-label="Breakfast" data-time="7:30 am">
+          <div class="t"><b>Breakfast</b><span>7:30 am &middot; <span data-bind="halfGrams">180</span> g kibble</span></div>
           <span class="state"><span class="tick"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.6 4.5L19 7"/></svg></span><span class="word">Given</span></span>
         </button>
-        <button class="meal" data-meal>
-          <div class="t"><b>Dinner</b><span>7:00 pm &middot; 180 g kibble + curd</span></div>
+        <button class="meal" data-meal data-label="Dinner" data-time="7:00 pm">
+          <div class="t"><b>Dinner</b><span>7:00 pm &middot; <span data-bind="halfGrams">180</span> g kibble + curd</span></div>
           <span class="state"><span class="tick"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.6 4.5L19 7"/></svg></span><span class="word">7:00 pm</span></span>
         </button>
       </div>
@@ -1493,7 +1759,7 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
       <p class="body rise" style="--d:5">Chicken in any form, including treats and broth. Grapes, onion, chocolate, xylitol.</p>
 
       <div class="rise" style="--d:6; margin-top:26px">
-        <button class="btn ghost" data-toast="Bowl weighed at 182 g">Log a different portion</button>
+        <button class="btn ghost" data-sheet="log-portion">Change the daily portion</button>
       </div>
     </section>
 
@@ -1501,13 +1767,13 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
     <section class="screen" id="s-growth" data-name="Growth tracker" data-tab="">
       <div class="navbar rise" style="--d:0">
         <button class="back" data-back aria-label="Back"><svg width="22" height="22"><use href="#i-back"/></svg></button>
-        <span class="crumb">Bruno &middot; care</span>
+        <span class="crumb"><span data-bind="name">Bruno</span> &middot; care</span>
       </div>
       <h1 class="display rise" style="--d:1">Growth</h1>
       <div class="hero-figure rise" style="--d:2">
-        <span class="figure" style="font-size:62px" data-count="18.4" data-dec="1">18.4</span><span class="unit">kg</span>
+        <span class="figure" style="font-size:62px" data-count="18.4" data-dec="1" data-bind-count="weight">18.4</span><span class="unit">kg</span>
       </div>
-      <p class="subhead rise" style="--d:2">Inside the breed-normal band for Indie, 4 years.</p>
+      <p class="subhead rise" style="--d:2">Inside the breed-normal band for <span data-bind="breed">Indie</span>, <span data-bind="age">4 yr</span>.</p>
 
       <div class="card rise" style="--d:3; margin-top:22px">
         <svg class="chart" viewBox="0 0 300 196" preserveAspectRatio="none" style="height:196px">
@@ -1527,14 +1793,14 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
       </div>
 
       <div class="rise" style="--d:5; margin-top:24px">
-        <button class="btn ghost" data-toast="Weight logged &middot; 18.4 kg today">Log today&rsquo;s weight</button>
+        <button class="btn ghost" data-sheet="log-weight">Log today&rsquo;s weight</button>
       </div>
     </section>
 
     <!-- ========== SPENDING ========== -->
     <section class="screen has-tabs" id="s-spending" data-name="Expense tracker" data-tab="heart">
       <h1 class="display rise" style="--d:0">Spending</h1>
-      <p class="figure rise" style="--d:1; font-size:58px; margin:10px 0 0">&#8377;<span data-count="2840" data-comma="1">2,840</span></p>
+      <p class="figure rise" style="--d:1; font-size:58px; margin:10px 0 0">&#8377;<span data-count="2840" data-comma="1" id="spendTotal">2,840</span></p>
       <p class="subhead rise" style="--d:1">August &middot; &#8377;460 less than July</p>
 
       <div class="donut-wrap rise" style="--d:2">
@@ -1552,15 +1818,10 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
         </div>
       </div>
 
-      <div class="rows rise" style="--d:3">
-        <div class="row"><span class="k" style="color:var(--ink)">Food</span><span class="v num">&#8377;1,650</span></div>
-        <div class="row"><span class="k" style="color:var(--ink)">Vet</span><span class="v num">&#8377;890</span></div>
-        <div class="row"><span class="k" style="color:var(--ink)">Medicines</span><span class="v num">&#8377;300</span></div>
-        <div class="row faded"><span class="k">Grooming</span><span class="v num">&#8377;0</span></div>
-      </div>
+      <div class="rows rise" style="--d:3" id="spendRows"></div>
 
       <div class="rise" style="--d:4; margin-top:24px">
-        <button class="btn" id="addExpense">Add expense</button>
+        <button class="btn" data-sheet="add-expense"><svg width="19" height="19"><use href="#i-plus"/></svg>Add expense</button>
       </div>
     </section>
 
@@ -1568,29 +1829,29 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
     <section class="screen" id="s-poster" data-name="Lost pet poster &middot; live preview" data-tab="" style="padding-bottom:120px">
       <div class="navbar rise" style="--d:0">
         <button class="back" data-back aria-label="Back"><svg width="22" height="22"><use href="#i-back"/></svg></button>
-        <span class="crumb">Bruno</span>
+        <span class="crumb"><span data-bind="name">Bruno</span></span>
       </div>
       <h1 class="display rise" style="--d:1">Lost poster</h1>
 
       <div class="card rise" style="--d:2; margin-top:20px">
         <p class="eyebrow" style="margin-bottom:14px">Preview</p>
         <div class="poster">
-          <h3>Missing: Bruno</h3>
-          <div class="photo"><svg class="pup" viewBox="0 0 240 200"><use href="#pup"/></svg></div>
-          <p>Indie, male, 4 years, 18 kg. Brown with a white chest patch. Last seen near 5th Block, Koramangala on 20 August, evening. Answers to his name, nervous with strangers.</p>
-          <div class="foot"><b>Call Aarav &middot; 98450 12233</b><span>Reward offered</span></div>
+          <h3>Missing: <span data-bind="name">Bruno</span></h3>
+          <div class="photo"><svg class="pup" viewBox="0 0 240 200"><use class="pet-use" href="#pup-dog"/></svg></div>
+          <p><span data-bind="breed">Indie</span>, <span data-bind="sexLower">male</span>, <span data-bind="age">4 yr</span>, <span data-bind="weight">18.4</span> kg. Brown with a white chest patch. Last seen near <span data-bind="lastSeen">Koramangala 5th Block</span> on 20 August, evening. Answers to <span data-bind="their">his</span> name, nervous with strangers.</p>
+          <div class="foot"><b>Call <span data-bind="owner">Aarav</span> &middot; 98450 12233</b><span>Reward offered</span></div>
         </div>
       </div>
 
       <div class="rows rise" style="--d:3">
-        <div class="row"><span class="k">Last seen</span><span class="v">Koramangala 5th Block</span></div>
-        <div class="row"><span class="k">Reward</span><span class="v num">&#8377;5,000</span></div>
+        <button class="row" data-sheet="last-seen"><span class="k">Last seen</span><span class="v" data-bind="lastSeen">Koramangala 5th Block</span><svg class="chev" width="20" height="20"><use href="#i-chev"/></svg></button>
+        <button class="row" data-sheet="reward"><span class="k">Reward</span><span class="v num">&#8377;<span data-bind="reward">5,000</span></span><svg class="chev" width="20" height="20"><use href="#i-chev"/></svg></button>
         <div class="row"><span class="k">Language</span><span class="v">English + &#3221;&#3240;&#3277;&#3240;&#3233;</span></div>
         <div class="row"><span class="k">Reach</span><span class="v">142 owners within 3 km</span></div>
       </div>
 
       <div class="em-foot" style="background:linear-gradient(180deg,rgba(246,243,236,0),var(--bone) 30%)">
-        <button class="btn pine" data-toast="Poster shared to 3 neighbourhood groups">
+        <button class="btn pine" data-sheet="share-poster">
           <svg width="19" height="19"><use href="#i-share"/></svg>Share poster on WhatsApp</button>
       </div>
     </section>
@@ -1599,26 +1860,26 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
     <section class="screen has-tabs" id="s-community" data-name="Community" data-tab="chat">
       <div class="head-row rise" style="--d:0">
         <h1 class="display">Community</h1>
-        <button class="pill" data-toast="Ask the Koramangala circle">Ask</button>
+        <button class="pill" data-sheet="ask-question"><svg width="15" height="15"><use href="#i-plus"/></svg>Ask</button>
       </div>
 
       <div class="post rise" style="--d:1">
         <div class="who"><span class="avatar" style="background:#EFD8D0">P</span><b>Priya &middot; Indiranagar &middot; 2h</b></div>
         <p class="said">Vet in Indiranagar who is good with anxious cats? Mine panics in the carrier.</p>
-        <div class="acts"><b>7 answers</b><button data-toast="Your answer was posted">Answer</button></div>
+        <div class="acts"><b>7 answers</b><button data-answer="1">Answer</button></div>
       </div>
 
       <div class="post rise" style="--d:2">
         <div class="who"><span class="avatar" style="background:#DCE4DA">R</span><b>Rohan &middot; HSR &middot; 5h</b></div>
-        <div class="photo"><svg class="pup" viewBox="0 0 240 200"><use href="#pup"/></svg></div>
+        <div class="photo"><svg class="pup" viewBox="0 0 240 200"><use href="#pup-dog"/></svg></div>
         <p class="said">First monsoon walk. He hated it.</p>
-        <div class="acts"><b>4 replies</b><button data-toast="Liked">Like</button></div>
+        <div class="acts"><b>4 replies</b><button data-like="1">Like</button></div>
       </div>
 
       <div class="post rise" style="--d:3">
         <div class="who"><span class="avatar" style="background:#EFE3C9">M</span><b>Meera &middot; Whitefield &middot; 1d</b></div>
         <p class="said">Two cats and one dog in a 2BHK &mdash; how do you split feeding times so nobody steals?</p>
-        <div class="acts"><b>12 answers</b><button data-toast="Your answer was posted">Answer</button></div>
+        <div class="acts"><b>12 answers</b><button data-answer="1">Answer</button></div>
       </div>
     </section>
 
@@ -1636,15 +1897,15 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
       </div>
 
       <div class="rows rise" style="--d:3">
-        <button class="row" data-toast="English, &#3221;&#3240;&#3277;&#3240;&#3233; and &#2361;&#2367;&#2344;&#2381;&#2342;&#2368; available">
+        <button class="row" data-sheet="language">
           <span class="k">Language</span><span class="v">English &middot; &#3221;&#3240;&#3277;&#3240;&#3233; &middot; &#2361;&#2367;&#2344;&#2381;&#2342;&#2368;</span></button>
-        <button class="row" data-toast="Aarav and Meera share this thread">
+        <button class="row" data-sheet="family">
           <span class="k">Family sharing</span><span class="v">2 people</span></button>
-        <button class="row" data-toast="Meals, medicines and vaccines are on">
+        <button class="row" data-sheet="reminders">
           <span class="k">Reminders</span><span class="v">Meals, meds, vaccines</span></button>
         <button class="row" data-toast="Exported Bruno&rsquo;s full history as PDF">
           <span class="k">Export records</span><span class="v">PDF</span></button>
-        <button class="row" data-toast="City Pet Hospital, Dr. Menon, Meera">
+        <button class="row" data-sheet="contacts">
           <span class="k">Emergency contacts</span><span class="v">3 saved</span></button>
       </div>
 
@@ -1671,6 +1932,13 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 
     <div class="home-indicator" id="homeIndicator"></div>
 
+    <!-- bottom sheet: every real action in the app opens one of these -->
+    <div class="scrim" id="scrim"></div>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="grabber"></div>
+      <div class="sheet-scroll" id="sheetBody"></div>
+    </div>
+
     <!-- launch -->
     <div class="boot" id="boot">
       <svg class="mark" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
@@ -1695,8 +1963,9 @@ button:focus-visible,a:focus-visible,input:focus-visible,[tabindex]:focus-visibl
 
 <script>
 /* ============================================================
-   PawPal — router, gestures, counters, charts, presenter shell
+   PawPal — state, router, sheets, gestures, counters, charts
    No dependencies, no modules, no network. Runs from file://
+   ES5 only, so it works on older browsers too.
    ============================================================ */
 (function () {
 'use strict';
@@ -1705,13 +1974,178 @@ var $  = function (s, r) { return (r || document).querySelector(s); };
 var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
 var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-/* the order the arrow keys walk, which is also the demo script */
+function esc(v) {
+  return String(v).replace(/&/g, '&amp;').replace(/</g, '&lt;')
+                  .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
+}
+function inr(n) { return Number(n).toLocaleString('en-IN'); }
+function cap(v) { return v ? v.charAt(0).toUpperCase() + v.slice(1) : v; }
+
+/* ============================================================
+   1. State
+   Everything the owner types in onboarding lives here, and every
+   screen reads from it. Nothing about the pet is hard-coded in
+   the markup any more.
+   ============================================================ */
+
+var SPECIES = {
+  dog:    { one: 'dog',    many: 'dogs',    kcalPerKg: 67, food: 'kibble' },
+  cat:    { one: 'cat',    many: 'cats',    kcalPerKg: 60, food: 'wet food' },
+  rabbit: { one: 'rabbit', many: 'rabbits', kcalPerKg: 45, food: 'pellets' },
+  bird:   { one: 'bird',   many: 'birds',   kcalPerKg: 80, food: 'seed mix' }
+};
+
+var OWNER = 'Aarav';
+
+var PETS = [
+  { name: 'Bruno', species: 'dog', breed: 'Indie', sex: 'male',
+    age: '4 yr', years: 4, weight: 18.4, since: 'March 2022',
+    allergies: 'Chicken, dust mites', grams: 360,
+    lastSeen: 'Koramangala 5th Block', reward: '5,000' },
+  { name: 'Mishti', species: 'cat', breed: 'Indian shorthair', sex: 'female',
+    age: '2 yr', years: 2, weight: 4.2, since: 'July 2024',
+    allergies: 'None on file', grams: 230,
+    lastSeen: 'Koramangala 5th Block', reward: '3,000' }
+];
+var petIndex = 0;
+function pet() { return PETS[petIndex]; }
+
+var SPEND = [
+  { name: 'Food',      value: 1650, colour: '#23372B' },
+  { name: 'Vet',       value:  890, colour: '#E8A33D' },
+  { name: 'Medicines', value:  300, colour: '#E7C8BE' },
+  { name: 'Grooming',  value:    0, colour: '#C9C2B2' },
+  { name: 'Treats',    value:    0, colour: '#A9BBA2' }
+];
+function spendTotal() {
+  var t = 0;
+  for (var i = 0; i < SPEND.length; i++) { t += SPEND[i].value; }
+  return t;
+}
+
+/* how every bound span in the markup gets its text */
+var BIND = {
+  name:        function (p) { return p.name; },
+  'name-poss': function (p) { return p.name + '’s'; },
+  owner:       function ()  { return OWNER; },
+  greeting:    function ()  {
+    var h = new Date().getHours();
+    return h < 12 ? 'Good morning' : (h < 17 ? 'Good afternoon' : 'Good evening');
+  },
+  today: function () {
+    var d = new Date();
+    var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+    var mons = ['January','February','March','April','May','June','July',
+                'August','September','October','November','December'];
+    return days[d.getDay()] + ', ' + d.getDate() + ' ' + mons[d.getMonth()];
+  },
+  species:       function (p) { return SPECIES[p.species].one; },
+  speciesPlural: function (p) { return SPECIES[p.species].many; },
+  breed:      function (p) { return p.breed; },
+  sex:        function (p) { return cap(p.sex); },
+  sexLower:   function (p) { return p.sex; },
+  age:        function (p) { return p.age; },
+  weight:     function (p) { return p.weight.toFixed(1); },
+  since:      function (p) { return p.since; },
+  allergies:  function (p) { return p.allergies; },
+  grams:      function (p) { return String(p.grams); },
+  halfGrams:  function (p) { return String(Math.round(p.grams / 2)); },
+  kcal:       function (p) { return inr(Math.round(p.weight * SPECIES[p.species].kcalPerKg)); },
+  spend:      function ()  { return inr(spendTotal()); },
+  lastSeen:   function (p) { return p.lastSeen; },
+  reward:     function (p) { return p.reward; },
+  they:  function (p) { return p.sex === 'female' ? 'she' : 'he'; },
+  They:  function (p) { return p.sex === 'female' ? 'She' : 'He'; },
+  their: function (p) { return p.sex === 'female' ? 'her' : 'his'; },
+  them:  function (p) { return p.sex === 'female' ? 'her' : 'him'; },
+  askPlaceholder: function (p) { return 'Ask about ' + p.name; }
+};
+
+/* numeric bindings feed the count-up figures */
+var BIND_COUNT = {
+  weight: function (p) { return p.weight; },
+  years:  function (p) { return p.years; },
+  grams:  function (p) { return p.grams; }
+};
+
+function render() {
+  var p = pet();
+
+  $$('[data-bind]').forEach(function (el) {
+    var fn = BIND[el.getAttribute('data-bind')];
+    if (fn) { el.textContent = fn(p); }
+  });
+
+  $$('[data-ph]').forEach(function (el) {
+    var fn = BIND[el.getAttribute('data-ph')];
+    if (fn) { el.placeholder = fn(p); }
+  });
+
+  $$('[data-bind-count]').forEach(function (el) {
+    var fn = BIND_COUNT[el.getAttribute('data-bind-count')];
+    if (!fn) return;
+    var v = fn(p);
+    el.setAttribute('data-count', v);
+    /* show the true value at rest, and let it count up again on next entry */
+    var dec = parseInt(el.getAttribute('data-dec') || '0', 10);
+    el.textContent = v.toFixed(dec) + (el.getAttribute('data-suffix') || '');
+    el.dataset.done = '0';
+    el.dataset.from = '0';
+    el.dataset.run = 'rebound-' + (++runSeq);
+  });
+
+  /* every drawing of the pet follows the species that was picked */
+  $$('.pet-use').forEach(function (u) {
+    u.setAttribute('href', '#pup-' + p.species);
+    u.setAttributeNS('http://www.w3.org/1999/xlink', 'xlink:href', '#pup-' + p.species);
+  });
+
+  renderPetRow();
+  renderSpend();
+}
+
+/* re-run the figures on whichever screen the user is looking at */
+function refreshCounts() {
+  if (!current) return;
+  var el = screenEl(current);
+  $$('[data-count]', el).forEach(function (n) { n.dataset.done = '0'; });
+  countUp(el);
+}
+
+var RING = {
+  dog:    'linear-gradient(150deg,#F2DDD6,#E7C8BE)',
+  cat:    'linear-gradient(150deg,#E6E9E2,#CFC5B7)',
+  rabbit: 'linear-gradient(150deg,#F3EAE7,#D8CBC6)',
+  bird:   'linear-gradient(150deg,#E7EEE2,#BCCBB2)'
+};
+
+function renderPetRow() {
+  var row = $('#petRow');
+  if (!row) return;
+  var html = '';
+  PETS.forEach(function (p, i) {
+    html += '<button class="pet' + (i === petIndex ? ' on' : '') + '" data-pet-index="' + i + '">'
+          +   '<span class="ring" style="background:' + RING[p.species] + '">'
+          +     '<svg width="36" height="32" viewBox="30 20 200 170"><use href="#pup-' + p.species + '"/></svg>'
+          +   '</span>' + esc(p.name)
+          + '</button>';
+  });
+  html += '<button class="pet" data-sheet="add-pet">'
+        +   '<span class="ring add"><svg width="20" height="20"><use href="#i-plus"/></svg></span>Add'
+        + '</button>';
+  row.innerHTML = html;
+}
+
+/* ============================================================
+   2. Router
+   ============================================================ */
+
 var ORDER = ['s-signin','s-onboard','s-home','s-assistant','s-emergency','s-profile',
              's-vaccines','s-records','s-feeding','s-growth','s-spending','s-poster',
              's-community','s-settings'];
 
 var SHORT = {
-  's-home':'Care thread', 's-assistant':'Assistant', 's-profile':'Bruno',
+  's-home':'Care thread', 's-assistant':'Assistant', 's-profile':'',
   's-vaccines':'Vaccinations', 's-records':'Records', 's-feeding':'Feeding',
   's-growth':'Growth', 's-spending':'Spending', 's-poster':'Lost poster',
   's-community':'Community', 's-settings':'Settings'
@@ -1719,21 +2153,19 @@ var SHORT = {
 
 var TAB_ROOTS = ['s-home','s-spending','s-community','s-profile'];
 
-var viewport = $('#viewport');
-var tabbar   = $('#tabbar');
-var statusbar= $('#statusbar');
-var homeInd  = $('#homeIndicator');
-var compact  = $('#compactBar');
-var toastEl  = $('#toast');
+var viewport  = $('#viewport');
+var tabbar    = $('#tabbar');
+var statusbar = $('#statusbar');
+var homeInd   = $('#homeIndicator');
+var compact   = $('#compactBar');
+var toastEl   = $('#toast');
 
 var current = null;
 var stack   = [];
 var busy    = false;
 var pending = null;
+var scrollMem = {};
 
-/* ------------------------------------------------------------
-   fit the phone to the window
-   ------------------------------------------------------------ */
 function fit() {
   var pad = window.innerHeight > 900 ? 96 : 40;
   var s = Math.min(1, (window.innerHeight - pad) / 872);
@@ -1742,9 +2174,6 @@ function fit() {
 window.addEventListener('resize', fit);
 fit();
 
-/* ------------------------------------------------------------
-   router
-   ------------------------------------------------------------ */
 function screenEl(id) { return document.getElementById(id); }
 
 function kindFor(to) {
@@ -1765,26 +2194,36 @@ var CLASSES = {
 
 function go(to, kind) {
   if (to === current || !screenEl(to)) return;
-  /* a tap that lands mid-transition waits its turn rather than being dropped */
   if (busy) { pending = to; return; }
+  closeSheet(true);
   kind = kind || kindFor(to);
 
   var inEl  = screenEl(to);
   var outEl = current ? screenEl(current) : null;
 
-  /* keep a back stack that mirrors what the user actually did */
-  if (kind === 'pop') { stack = stack.slice(0, stack.indexOf(to)); }
-  else if (current && kind !== 'unsheet') { stack.push(current); }
-  else if (kind === 'unsheet') { stack.pop(); }
+  if (outEl) { scrollMem[current] = outEl.scrollTop; }
 
-  inEl.scrollTop = 0;
-  inEl.classList.remove('settled');
+  if (kind === 'pop') { stack = stack.slice(0, stack.indexOf(to)); }
+  else if (kind === 'unsheet') { stack.pop(); }
+  else if (current) { stack.push(current); }
+
+  /* Going back should return you to the page exactly as you left it.
+     Resetting the scroll and replaying the entrances made it look like
+     a brand new screen every time, which read as a glitch. */
+  var returning = (kind === 'pop' || kind === 'unsheet');
+  if (returning) {
+    inEl.scrollTop = scrollMem[to] || 0;
+  } else {
+    inEl.scrollTop = 0;
+    inEl.classList.remove('settled');
+  }
+
   inEl.classList.add('is-active');
   chrome(to);
 
   if (reduced || !outEl) {
-    if (outEl) { outEl.classList.remove('is-active','is-moving'); }
-    current = to; settle(inEl); return;
+    if (outEl) { outEl.classList.remove('is-active', 'is-moving'); }
+    current = to; settle(inEl, returning); return;
   }
 
   busy = true;
@@ -1797,8 +2236,8 @@ function go(to, kind) {
     inEl.classList.remove(cls[0]);
     outEl.classList.remove('is-moving', cls[1]);
     busy = false;
-    settle(inEl);
-    if (pending) { var p = pending; pending = null; go(p); }
+    settle(inEl, returning);
+    if (pending) { var q = pending; pending = null; go(q); }
   };
   var t = setTimeout(done, 700);
   inEl.addEventListener('animationend', function h() {
@@ -1812,15 +2251,14 @@ function back() {
   else { go('s-home', 'pop'); }
 }
 
-/* replay entrance animations every time a screen is shown */
-function settle(el) {
+function settle(el, returning) {
+  if (returning) { el.classList.add('settled'); return; }
   void el.offsetWidth;
   el.classList.add('settled');
   countUp(el);
   if (el.id === 's-assistant') runAssistant();
 }
 
-/* status bar, tab bar, caption, compact header */
 function chrome(id) {
   var el = screenEl(id);
   var dark = el.getAttribute('data-dark') === '1';
@@ -1828,13 +2266,12 @@ function chrome(id) {
   homeInd.classList.toggle('on-dark', dark);
 
   var tab = el.getAttribute('data-tab');
-  var rootScreen = TAB_ROOTS.indexOf(id) > -1;
-  tabbar.classList.toggle('hidden', !rootScreen);
+  tabbar.classList.toggle('hidden', TAB_ROOTS.indexOf(id) < 0);
   $$('.tab').forEach(function (t) {
     t.classList.toggle('active', !!tab && t.getAttribute('data-tab-id') === tab);
   });
 
-  compact.textContent = SHORT[id] || '';
+  compact.textContent = SHORT[id] === '' ? pet().name : (SHORT[id] || '');
   compact.classList.remove('show');
 
   var i = ORDER.indexOf(id);
@@ -1845,22 +2282,29 @@ function chrome(id) {
   });
 }
 
-/* ------------------------------------------------------------
-   scroll: compact header
-   ------------------------------------------------------------ */
 $$('.screen').forEach(function (s) {
   s.addEventListener('scroll', function () {
-    if (s.id !== current || !SHORT[s.id]) return;
+    if (s.id !== current) return;
+    var label = SHORT[s.id] === '' ? pet().name : SHORT[s.id];
+    if (!label) return;
+    compact.textContent = label;
     compact.classList.toggle('show', s.scrollTop > 52);
   }, { passive: true });
 });
 
-/* ------------------------------------------------------------
-   numbers count up
-   ------------------------------------------------------------ */
+/* ============================================================
+   3. Counters and charts
+   ============================================================ */
+
+var runSeq = 0;
+
 function countUp(root) {
   $$('[data-count]', root).forEach(function (el) {
     if (el.dataset.done === '1' && el.dataset.replay !== '1') { return; }
+    /* tag this run: if the value is rebound while a count is in flight,
+       the older run must not write its stale number back over the new one */
+    var myRun = String(++runSeq);
+    el.dataset.run = myRun;
     var to  = parseFloat(el.getAttribute('data-count'));
     var dec = parseInt(el.getAttribute('data-dec') || '0', 10);
     var suf = el.getAttribute('data-suffix') || '';
@@ -1870,56 +2314,45 @@ function countUp(root) {
 
     var fmt = function (v) {
       var s = v.toFixed(dec);
-      if (com) s = Number(s).toLocaleString('en-IN');
+      if (com) s = inr(s);
       return s + suf;
     };
-    if (!dur) { el.textContent = fmt(to); el.dataset.done = '1'; return; }
+    if (!dur) { el.textContent = fmt(to); el.dataset.done = '1'; el.dataset.from = to; return; }
 
     var stopped = false;
+    function stale() { return el.dataset.run !== myRun; }
     function finish() {
       stopped = true;
+      if (stale()) return;
       el.textContent = fmt(to);
       el.dataset.done = '1';
       el.dataset.from = to;
       el.dataset.replay = '0';
     }
     function step(ts) {
-      if (stopped) return;
+      if (stopped || stale()) return;
       if (t0 === null) t0 = ts;
-      var p = Math.min(1, (ts - t0) / dur);
-      var e = 1 - Math.pow(1 - p, 3);
+      var q = Math.min(1, (ts - t0) / dur);
+      var e = 1 - Math.pow(1 - q, 3);
       el.textContent = fmt(from + (to - from) * e);
-      if (p < 1) requestAnimationFrame(step); else finish();
+      if (q < 1) requestAnimationFrame(step); else finish();
     }
     requestAnimationFrame(step);
-    /* if frames stall — a hidden tab, a laggy projector — never leave a
-       half-counted number on screen */
     setTimeout(function () { if (!stopped) finish(); }, dur + 700);
   });
 }
 
-/* ------------------------------------------------------------
-   charts
-   ------------------------------------------------------------ */
 $$('.chart .line').forEach(function (p) {
-  var len = Math.ceil(p.getTotalLength());
-  p.style.setProperty('--len', len);
+  p.style.setProperty('--len', Math.ceil(p.getTotalLength()));
 });
-
-var SPEND = [
-  { name: 'Food',      value: 1650, colour: '#23372B' },
-  { name: 'Vet',       value:  890, colour: '#E8A33D' },
-  { name: 'Medicines', value:  300, colour: '#E7C8BE' },
-  { name: 'Grooming',  value:    0, colour: '#C9C2B2' }
-];
 
 function drawDonut() {
   var svg = $('.donut');
   if (!svg) return;
-  $$('.seg', svg).forEach(function (c) { c.remove(); });
+  $$('.seg', svg).forEach(function (c) { c.parentNode.removeChild(c); });
 
   var R = 68, C = 2 * Math.PI * R;
-  var total = SPEND.reduce(function (a, s) { return a + s.value; }, 0) || 1;
+  var total = spendTotal() || 1;
   var start = 0, i = 0;
 
   SPEND.forEach(function (s) {
@@ -1936,17 +2369,48 @@ function drawDonut() {
     svg.appendChild(c);
     start += frac;
   });
-
-  $$('.donut-key div').forEach(function (row, n) {
-    var s = SPEND[n];
-    row.querySelector('span').textContent = Math.round(s.value / total * 100) + '%';
-  });
 }
-drawDonut();
 
-/* ------------------------------------------------------------
-   toast
-   ------------------------------------------------------------ */
+/* the legend and the category list are both generated, so a new
+   category added from the sheet shows up in each of them */
+function renderSpend() {
+  var total = spendTotal() || 1;
+
+  var key = $('.donut-key');
+  if (key) {
+    var kh = '';
+    SPEND.forEach(function (s) {
+      if (s.value <= 0) return;
+      kh += '<div><i style="background:' + s.colour + '"></i>' + esc(s.name)
+          + '<span class="num">' + Math.round(s.value / total * 100) + '%</span></div>';
+    });
+    key.innerHTML = kh;
+  }
+
+  var rows = $('#spendRows');
+  if (rows) {
+    var rh = '';
+    SPEND.forEach(function (s) {
+      rh += '<div class="row' + (s.value ? '' : ' faded') + '">'
+          +   '<span class="k"' + (s.value ? ' style="color:var(--ink)"' : '') + '>' + esc(s.name) + '</span>'
+          +   '<span class="v num">₹' + inr(s.value) + '</span>'
+          + '</div>';
+    });
+    rows.innerHTML = rh;
+  }
+
+  var t = $('#spendTotal');
+  if (t) {
+    t.setAttribute('data-count', spendTotal());
+    if (t.dataset.done === '1') { t.textContent = inr(spendTotal()); }
+  }
+  drawDonut();
+}
+
+/* ============================================================
+   4. Toast and bottom sheet
+   ============================================================ */
+
 var toastT;
 function toast(msg) {
   toastEl.innerHTML = msg;
@@ -1955,17 +2419,296 @@ function toast(msg) {
   toastT = setTimeout(function () { toastEl.classList.remove('show'); }, 2400);
 }
 
-/* ------------------------------------------------------------
-   emergency opens with a wash of red from wherever you tapped
-   ------------------------------------------------------------ */
+var sheetEl = $('#sheet'), scrimEl = $('#scrim'), sheetBody = $('#sheetBody');
+var sheetOpen = false;
+
+function openSheet(html, after) {
+  sheetBody.innerHTML = html;
+  sheetEl.classList.add('on');
+  sheetEl.setAttribute('aria-hidden', 'false');
+  scrimEl.classList.add('on');
+  sheetOpen = true;
+  if (after) after(sheetBody);
+  var first = sheetBody.querySelector('input, textarea');
+  if (first) { setTimeout(function () { first.focus(); }, 380); }
+}
+
+function closeSheet(silent) {
+  if (!sheetOpen) return;
+  sheetEl.classList.remove('on');
+  sheetEl.setAttribute('aria-hidden', 'true');
+  scrimEl.classList.remove('on');
+  sheetOpen = false;
+  if (!silent) { setTimeout(function () { sheetBody.innerHTML = ''; }, 420); }
+  else { sheetBody.innerHTML = ''; }
+}
+scrimEl.addEventListener('click', function () { closeSheet(); });
+
+/* ============================================================
+   5. Sheets, one per real action
+   ============================================================ */
+
+var expenseDraft = { amount: 0, cat: 0 };
+
+/* the add button always says exactly what it is about to do */
+function syncExpenseButton() {
+  var b = document.getElementById('expAdd');
+  if (!b) return;
+  if (expenseDraft.amount > 0) {
+    b.disabled = false;
+    b.textContent = 'Add ₹' + inr(expenseDraft.amount) + ' to ' + SPEND[expenseDraft.cat].name;
+  } else {
+    b.disabled = true;
+    b.textContent = 'Enter an amount';
+  }
+}
+
+var SHEETS = {
+
+  'add-expense': function () {
+    expenseDraft = { amount: 0, cat: 0 };
+    var chips = '';
+    SPEND.forEach(function (s, i) {
+      chips += '<button class="chip' + (i === 0 ? ' on' : '') + '" data-exp-cat="' + i + '">'
+             + esc(s.name) + '</button>';
+    });
+    var keys = ['1','2','3','4','5','6','7','8','9','00','0'];
+    var pad = '';
+    keys.forEach(function (k) { pad += '<button data-key="' + k + '">' + k + '</button>'; });
+    pad += '<button data-key="del" aria-label="Delete">&#9003;</button>';
+
+    return '<h3>Add expense</h3>'
+      + '<p class="sub">It lands on this month’s total straight away.</p>'
+      + '<p class="amount" id="amtBox"><span class="cur">₹</span><span class="val" id="amtVal">0</span></p>'
+      + '<label class="form-label eyebrow">Category</label>'
+      + '<div class="chip-row" id="expCats">' + chips + '</div>'
+      + '<div class="keypad" id="expPad">' + pad + '</div>'
+      + '<button class="btn pine" id="expAdd" disabled>Enter an amount</button>';
+  },
+
+  'edit-pet': function () {
+    var p = pet();
+    return '<h3>Edit details</h3>'
+      + '<p class="sub">Changing these updates every screen in the app.</p>'
+      + '<div class="field-pair">'
+      +   '<div><label class="form-label eyebrow" for="e-name">Name</label>'
+      +   '<input class="field" id="e-name" maxlength="18" value="' + esc(p.name) + '"></div>'
+      +   '<div><label class="form-label eyebrow" for="e-breed">Breed</label>'
+      +   '<input class="field" id="e-breed" maxlength="20" value="' + esc(p.breed) + '"></div>'
+      + '</div>'
+      + '<label class="form-label eyebrow">Species</label>'
+      + '<div class="chip-row" id="e-species">'
+      +   ['dog','cat','rabbit','bird'].map(function (k) {
+            return '<button class="chip' + (p.species === k ? ' on' : '') + '" data-species="' + k + '">' + cap(k) + '</button>';
+          }).join('')
+      + '</div>'
+      + '<label class="form-label eyebrow">Sex</label>'
+      + '<div class="chip-row" id="e-sex">'
+      +   '<button class="chip' + (p.sex === 'male' ? ' on' : '') + '" data-sex="male">Male</button>'
+      +   '<button class="chip' + (p.sex === 'female' ? ' on' : '') + '" data-sex="female">Female</button>'
+      + '</div>'
+      + '<button class="btn pine" id="e-save">Save changes</button>';
+  },
+
+  'add-pet': function () {
+    return '<h3>Add a pet</h3>'
+      + '<p class="sub">They get their own care thread.</p>'
+      + '<label class="form-label eyebrow" for="n-name">Name</label>'
+      + '<input class="field" id="n-name" maxlength="18" placeholder="Their name">'
+      + '<label class="form-label eyebrow">Species</label>'
+      + '<div class="chip-row" id="n-species">'
+      +   ['dog','cat','rabbit','bird'].map(function (k, i) {
+            return '<button class="chip' + (i === 0 ? ' on' : '') + '" data-species="' + k + '">' + cap(k) + '</button>';
+          }).join('')
+      + '</div>'
+      + '<button class="btn pine" id="n-save">Add to the family</button>';
+  },
+
+  'allergies': function () {
+    return '<h3>Allergies</h3>'
+      + '<p class="sub">Shown on the emergency screen for the vet to read.</p>'
+      + '<label class="form-label eyebrow" for="a-val">Known allergies</label>'
+      + '<input class="field" id="a-val" maxlength="60" value="' + esc(pet().allergies) + '">'
+      + '<button class="btn pine" data-save="allergies">Save</button>';
+  },
+
+  'last-seen': function () {
+    return '<h3>Last seen</h3>'
+      + '<p class="sub">This goes on the poster and into the alert radius.</p>'
+      + '<label class="form-label eyebrow" for="ls-val">Place</label>'
+      + '<input class="field" id="ls-val" maxlength="40" value="' + esc(pet().lastSeen) + '">'
+      + '<button class="btn pine" data-save="lastSeen">Update poster</button>';
+  },
+
+  'reward': function () {
+    return '<h3>Reward</h3>'
+      + '<p class="sub">Optional, but it doubles the number of replies.</p>'
+      + '<label class="form-label eyebrow" for="rw-val">Amount in rupees</label>'
+      + '<input class="field" id="rw-val" type="number" min="0" step="500" value="'
+      + String(pet().reward).replace(/,/g, '') + '">'
+      + '<button class="btn pine" data-save="reward">Update poster</button>';
+  },
+
+  'log-weight': function () {
+    return '<h3>Log today’s weight</h3>'
+      + '<p class="sub">It joins the growth curve and the records page.</p>'
+      + '<div class="stepper">'
+      +   '<button data-step-w="-0.1" aria-label="Less"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9h10"/></svg></button>'
+      +   '<span class="read"><span id="wVal">' + pet().weight.toFixed(1) + '</span><small>kg</small></span>'
+      +   '<button data-step-w="0.1" aria-label="More"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 4v10M4 9h10"/></svg></button>'
+      + '</div>'
+      + '<button class="btn pine" id="wSave">Save weight</button>';
+  },
+
+  'log-portion': function () {
+    return '<h3>Daily portion</h3>'
+      + '<p class="sub">Split across two meals. We recalculate the calories.</p>'
+      + '<div class="stepper">'
+      +   '<button data-step-g="-10" aria-label="Less"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9h10"/></svg></button>'
+      +   '<span class="read"><span id="gVal">' + pet().grams + '</span><small>g per day</small></span>'
+      +   '<button data-step-g="10" aria-label="More"><svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 4v10M4 9h10"/></svg></button>'
+      + '</div>'
+      + '<button class="btn pine" id="gSave">Save portion</button>';
+  },
+
+  'add-record': function () {
+    var kinds = ['Vet visit', 'Prescription', 'Test result', 'Grooming'];
+    return '<h3>Add a record</h3>'
+      + '<p class="sub">Filed under ' + esc(pet().name) + '’s history.</p>'
+      + '<label class="form-label eyebrow">Kind</label>'
+      + '<div class="chip-row" id="r-kind">'
+      +   kinds.map(function (k, i) {
+            return '<button class="chip' + (i === 0 ? ' on' : '') + '" data-kind="' + esc(k) + '">' + esc(k) + '</button>';
+          }).join('')
+      + '</div>'
+      + '<label class="form-label eyebrow" for="r-note">Note</label>'
+      + '<input class="field" id="r-note" maxlength="48" placeholder="Annual check, all clear">'
+      + '<button class="btn pine" id="r-save">File it</button>';
+  },
+
+  'answer': function () {
+    return '<h3>Your answer</h3>'
+      + '<p class="sub">Posted to the Koramangala circle under your name.</p>'
+      + '<textarea class="field" id="ansText" maxlength="240" placeholder="What worked for you?"></textarea>'
+      + '<button class="btn pine" id="ansPost">Post answer</button>';
+  },
+
+  'ask-question': function () {
+    return '<h3>Ask the circle</h3>'
+      + '<p class="sub">Goes to owners within 3 km of you.</p>'
+      + '<textarea class="field" id="qText" maxlength="240" placeholder="Vet who is good with anxious cats?"></textarea>'
+      + '<button class="btn pine" id="qPost">Post question</button>';
+  },
+
+  'share-poster': function () {
+    var groups = ['Koramangala Pets', 'HSR Dog Parents', 'Indiranagar Strays', 'Family'];
+    return '<h3>Share poster</h3>'
+      + '<p class="sub">Reaches 142 owners within 3 km.</p>'
+      + groups.map(function (g, i) {
+          return '<button class="opt' + (i < 2 ? ' on' : '') + '" data-multi="1">' + esc(g)
+               + '<span class="tick"><svg width="19" height="19"><use href="#i-check"/></svg></span></button>';
+        }).join('')
+      + '<button class="btn pine" id="shareGo">Send poster</button>';
+  },
+
+  'language': function () {
+    var langs = [['English','Default'], ['ಕನ್ನಡ','Kannada'], ['हिन्दी','Hindi']];
+    return '<h3>Language</h3>'
+      + '<p class="sub">Reminders and the lost poster use this.</p>'
+      + langs.map(function (l, i) {
+          return '<button class="opt' + (i === 0 ? ' on' : '') + '" data-one="lang">' + esc(l[0])
+               + '<span class="sub2">' + esc(l[1]) + '</span>'
+               + '<span class="tick"><svg width="19" height="19"><use href="#i-check"/></svg></span></button>';
+        }).join('')
+      + '<button class="btn pine" data-close="1">Done</button>';
+  },
+
+  'family': function () {
+    return '<h3>Family sharing</h3>'
+      + '<p class="sub">Everyone here sees the same care thread.</p>'
+      + '<button class="opt on"><span class="avatar" style="width:34px;height:34px;font-size:14px;background:#EFD8D0">A</span>'
+      + esc(OWNER) + '<span class="sub2">Owner</span></button>'
+      + '<button class="opt on"><span class="avatar" style="width:34px;height:34px;font-size:14px;background:#DCE4DA">M</span>'
+      + 'Meera<span class="sub2">Can edit</span></button>'
+      + '<button class="btn ghost" data-toast="Invite link copied">Invite someone</button>'
+      + '<button class="btn pine" data-close="1">Done</button>';
+  },
+
+  'reminders': function () {
+    var items = [['Meals', true], ['Medicines', true], ['Vaccinations', true], ['Walks', false], ['Grooming', false]];
+    return '<h3>Reminders</h3>'
+      + '<p class="sub">Each one becomes an entry on the care thread.</p>'
+      + items.map(function (it) {
+          return '<button class="opt' + (it[1] ? ' on' : '') + '" data-multi="1">' + esc(it[0])
+               + '<span class="tick"><svg width="19" height="19"><use href="#i-check"/></svg></span></button>';
+        }).join('')
+      + '<button class="btn pine" data-close="1">Done</button>';
+  },
+
+  'contacts': function () {
+    return '<h3>Emergency contacts</h3>'
+      + '<p class="sub">Called in this order from the emergency screen.</p>'
+      + '<button class="opt on">City Pet Hospital<span class="sub2">2.4 km</span></button>'
+      + '<button class="opt on">Dr. Menon<span class="sub2">Your vet</span></button>'
+      + '<button class="opt on">Meera<span class="sub2">Family</span></button>'
+      + '<button class="btn ghost" data-toast="Pick a contact from your phone book">Add a contact</button>'
+      + '<button class="btn pine" data-close="1">Done</button>';
+  },
+
+  'forgot': function () {
+    return '<h3>Reset password</h3>'
+      + '<p class="sub">We send a one-time link. It expires in 15 minutes.</p>'
+      + '<label class="form-label eyebrow" for="f-mail">Email</label>'
+      + '<input class="field" id="f-mail" type="email" value="aarav@pawpal.in">'
+      + '<button class="btn pine" data-toast="Reset link sent" data-close="1">Send the link</button>';
+  },
+
+  'book-vax': function () {
+    var slots = ['Thu 28 Aug, 10:00 am', 'Thu 28 Aug, 5:30 pm', 'Fri 29 Aug, 11:15 am'];
+    return '<h3>Book at Paws Clinic</h3>'
+      + '<p class="sub">1.2 km away. Rabies booster, about 15 minutes.</p>'
+      + slots.map(function (s, i) {
+          return '<button class="opt' + (i === 1 ? ' on' : '') + '" data-one="slot">' + esc(s)
+               + '<span class="tick"><svg width="19" height="19"><use href="#i-check"/></svg></span></button>';
+        }).join('')
+      + '<button class="btn pine" id="vaxBook">Confirm booking</button>';
+  }
+};
+
+function showSheet(name) {
+  var fn = SHEETS[name];
+  if (!fn) { return; }
+  openSheet(fn());
+}
+
+/* ============================================================
+   6. Care thread helpers
+   ============================================================ */
+
+function addThreadEntry(title, meta, tone) {
+  var thread = $('#s-home .thread');
+  if (!thread) return;
+  var b = document.createElement('button');
+  b.className = 'entry landed' + (tone ? ' ' + tone : '');
+  b.innerHTML = '<span class="node' + (tone === 'due' ? ' due' : '') + '"></span>'
+              + '<h4>' + esc(title) + '</h4><p>' + esc(meta) + '</p>';
+  thread.appendChild(b);
+}
+
+/* ============================================================
+   7. Emergency
+   ============================================================ */
+
 function emergency(ev) {
   if (reduced) { go('s-emergency', 'sheet'); return; }
   var r = viewport.getBoundingClientRect();
   var x = ev ? ev.clientX - r.left : 196;
   var y = ev ? ev.clientY - r.top  : 120;
   var far = Math.max(
-    Math.hypot(x, y), Math.hypot(r.width - x, y),
-    Math.hypot(x, r.height - y), Math.hypot(r.width - x, r.height - y)
+    Math.sqrt(x * x + y * y),
+    Math.sqrt((r.width - x) * (r.width - x) + y * y),
+    Math.sqrt(x * x + (r.height - y) * (r.height - y)),
+    Math.sqrt((r.width - x) * (r.width - x) + (r.height - y) * (r.height - y))
   );
   var w = document.createElement('div');
   w.className = 'wash';
@@ -1973,49 +2716,328 @@ function emergency(ev) {
   w.style.width = w.style.height = (far * 2) + 'px';
   viewport.appendChild(w);
   setTimeout(function () { go('s-emergency', 'fade'); }, 380);
-  setTimeout(function () { w.remove(); }, 900);
+  setTimeout(function () { if (w.parentNode) w.parentNode.removeChild(w); }, 900);
 }
 
-/* ------------------------------------------------------------
-   one delegated click handler for the whole prototype
-   ------------------------------------------------------------ */
+/* a call button that actually looks like it is calling */
+function placeCall(btn, who) {
+  if (btn.dataset.calling === '1') return;
+  btn.dataset.calling = '1';
+  var original = btn.innerHTML;
+  var secs = 0;
+  btn.innerHTML = '<span class="spinner" style="border-color:rgba(192,64,43,.25);border-top-color:var(--signal)"></span>Calling ' + esc(who);
+  var tick = setInterval(function () {
+    secs++;
+    btn.innerHTML = '<svg width="21" height="21"><use href="#i-phone"/></svg>' + esc(who)
+                  + ' · ' + (secs < 10 ? '0:0' + secs : '0:' + secs);
+  }, 1000);
+  setTimeout(function () {
+    clearInterval(tick);
+    btn.innerHTML = original;
+    btn.dataset.calling = '0';
+    toast('Call ended · records were shared');
+  }, 6000);
+}
+
+/* ============================================================
+   8. One delegated click handler
+   ============================================================ */
+
 document.addEventListener('click', function (e) {
   var t;
 
+  /* --- sheet-local controls first --- */
+
+  /* one rule for every chip row: pick one, drop the others */
+  if ((t = e.target.closest('.chip-row .chip'))) {
+    $$('.chip', t.parentNode).forEach(function (c) { c.classList.remove('on'); });
+    t.classList.add('on');
+    if (t.hasAttribute('data-exp-cat')) {
+      expenseDraft.cat = parseInt(t.getAttribute('data-exp-cat'), 10);
+      syncExpenseButton();
+    }
+    return;
+  }
+  if ((t = e.target.closest('[data-key]'))) {
+    var k = t.getAttribute('data-key');
+    var cur = String(expenseDraft.amount);
+    if (k === 'del') { cur = cur.length > 1 ? cur.slice(0, -1) : '0'; }
+    else { cur = (cur === '0' ? '' : cur) + k; }
+    expenseDraft.amount = Math.min(999999, parseInt(cur || '0', 10));
+    var box = $('#amtBox'), val = $('#amtVal');
+    if (val) { val.textContent = inr(expenseDraft.amount); }
+    if (box) { box.classList.remove('pulse'); void box.offsetWidth; box.classList.add('pulse'); }
+    syncExpenseButton();
+    return;
+  }
+  if ((t = e.target.closest('#expAdd'))) {
+    if (!expenseDraft.amount) return;
+    var cat = SPEND[expenseDraft.cat];
+    cat.value += expenseDraft.amount;
+    var amt = expenseDraft.amount;
+    var tot = $('#spendTotal');
+    if (tot) { tot.dataset.from = spendTotal() - amt; tot.dataset.replay = '1'; }
+    renderSpend();
+    render();
+    if (tot) { countUp($('#s-spending')); }
+    var scr = $('#s-spending');
+    scr.classList.remove('settled'); void scr.offsetWidth; scr.classList.add('settled');
+    closeSheet();
+    toast('₹' + inr(amt) + ' added to ' + esc(cat.name));
+    return;
+  }
+
+  if ((t = e.target.closest('[data-step-w]'))) {
+    var wv = $('#wVal');
+    var nw = Math.max(0.2, Math.round((parseFloat(wv.textContent) + parseFloat(t.getAttribute('data-step-w'))) * 10) / 10);
+    wv.textContent = nw.toFixed(1);
+    return;
+  }
+  if ((t = e.target.closest('#wSave'))) {
+    var newW = parseFloat($('#wVal').textContent);
+    pet().weight = newW;
+    var gr = $('#s-growth .rows');
+    if (gr) {
+      var row = document.createElement('div');
+      row.className = 'row landed';
+      row.innerHTML = '<span class="k">Today</span><span class="v num">' + newW.toFixed(1) + ' kg</span>';
+      gr.insertBefore(row, gr.firstChild);
+    }
+    render();
+    refreshCounts();
+    closeSheet();
+    toast('Weight logged · ' + newW.toFixed(1) + ' kg');
+    return;
+  }
+
+  if ((t = e.target.closest('[data-step-g]'))) {
+    var gv = $('#gVal');
+    var ng = Math.max(20, parseInt(gv.textContent, 10) + parseInt(t.getAttribute('data-step-g'), 10));
+    gv.textContent = ng;
+    return;
+  }
+  if ((t = e.target.closest('#gSave'))) {
+    pet().grams = parseInt($('#gVal').textContent, 10);
+    render();
+    var fs = $('#s-feeding');
+    $$('[data-count]', fs).forEach(function (n) { n.dataset.from = '0'; n.dataset.done = '0'; });
+    countUp(fs);
+    closeSheet();
+    toast('Portion set to ' + pet().grams + ' g a day');
+    return;
+  }
+
+  if ((t = e.target.closest('#e-save'))) {
+    var p = pet();
+    var nm = $('#e-name').value.trim();
+    if (nm) p.name = nm;
+    var bd = $('#e-breed').value.trim();
+    if (bd) p.breed = bd;
+    var sp = $('#e-species .chip.on');
+    if (sp) p.species = sp.getAttribute('data-species');
+    var sx = $('#e-sex .chip.on');
+    if (sx) p.sex = sx.getAttribute('data-sex');
+    render();
+    closeSheet();
+    toast('Saved · ' + esc(p.name) + '’s details updated');
+    return;
+  }
+
+  if ((t = e.target.closest('#n-save'))) {
+    var nn = $('#n-name').value.trim();
+    if (!nn) { $('#n-name').focus(); toast('Give them a name first'); return; }
+    var ns = $('#n-species .chip.on');
+    var sk = ns ? ns.getAttribute('data-species') : 'dog';
+    PETS.push({ name: nn, species: sk, breed: 'Not set', sex: 'male',
+                age: '1 yr', years: 1, weight: sk === 'dog' ? 12 : 4, since: 'Today',
+                allergies: 'None on file', grams: sk === 'dog' ? 260 : 200,
+                lastSeen: 'Koramangala 5th Block', reward: '2,000' });
+    petIndex = PETS.length - 1;
+    render();
+    closeSheet();
+    toast(esc(nn) + ' joined the family');
+    return;
+  }
+
+  if ((t = e.target.closest('[data-save]'))) {
+    var field = t.getAttribute('data-save');
+    var p2 = pet();
+    if (field === 'allergies') { p2.allergies = $('#a-val').value.trim() || 'None on file'; }
+    if (field === 'lastSeen')  { p2.lastSeen  = $('#ls-val').value.trim() || p2.lastSeen; }
+    if (field === 'reward')    { p2.reward    = inr(parseInt($('#rw-val').value || '0', 10)); }
+    render();
+    closeSheet();
+    toast('Updated');
+    return;
+  }
+
+  if ((t = e.target.closest('#r-save'))) {
+    var kind = ($('#r-kind .chip.on') || {}).textContent || 'Vet visit';
+    var note = $('#r-note').value.trim() || 'No note';
+    var rows2 = $('#s-records .rows');
+    if (rows2) {
+      var nr = document.createElement('div');
+      nr.className = 'row landed';
+      nr.innerHTML = '<span><span class="k">Today</span><br><span class="v">' + esc(kind) + ' · ' + esc(note) + '</span></span>';
+      rows2.insertBefore(nr, rows2.firstChild);
+    }
+    closeSheet();
+    toast('Record filed');
+    return;
+  }
+
+  if ((t = e.target.closest('#ansPost'))) {
+    var txt = $('#ansText').value.trim();
+    if (!txt) { $('#ansText').focus(); return; }
+    var target = $('#s-community .post[data-answering="1"] .acts b');
+    if (target) {
+      var n = parseInt(target.textContent, 10) + 1;
+      target.textContent = n + (target.textContent.indexOf('repl') > -1 ? ' replies' : ' answers');
+      target.classList.add('bump');
+      setTimeout(function () { target.classList.remove('bump'); }, 500);
+    }
+    $$('#s-community .post').forEach(function (x) { x.removeAttribute('data-answering'); });
+    closeSheet();
+    toast('Answer posted');
+    return;
+  }
+
+  if ((t = e.target.closest('#qPost'))) {
+    var qt = $('#qText').value.trim();
+    if (!qt) { $('#qText').focus(); return; }
+    var feed = $('#s-community');
+    var card = document.createElement('div');
+    card.className = 'post landed';
+    card.innerHTML = '<div class="who"><span class="avatar" style="background:#E7C8BE">'
+      + esc(OWNER.charAt(0).toUpperCase()) + '</span><b>' + esc(OWNER) + ' · Koramangala · now</b></div>'
+      + '<p class="said">' + esc(qt) + '</p>'
+      + '<div class="acts"><b>0 answers</b><button data-like="1">Like</button></div>';
+    feed.insertBefore(card, feed.querySelector('.post'));
+    closeSheet();
+    toast('Question posted to the circle');
+    return;
+  }
+
+  if ((t = e.target.closest('#shareGo'))) {
+    var n2 = $$('#sheetBody .opt.on').length;
+    closeSheet();
+    toast('Poster sent to ' + n2 + ' group' + (n2 === 1 ? '' : 's'));
+    return;
+  }
+
+  if ((t = e.target.closest('#vaxBook'))) {
+    var slot = ($('#sheetBody .opt.on') || {}).textContent || '';
+    var card = $('#s-vaccines .vax-item.due');
+    if (card) {
+      card.classList.remove('due');
+      card.querySelector('.when').textContent = 'Booked';
+      card.querySelector('.node').classList.remove('due');
+      var bb = card.querySelector('.btn');
+      bb.classList.add('pine');
+      bb.innerHTML = '<svg width="19" height="19"><use href="#i-check"/></svg>' + esc(slot.split('·')[0].trim());
+      bb.setAttribute('data-toast', 'Booked at Paws Clinic');
+      bb.removeAttribute('data-sheet');
+    }
+    addThreadEntry('Rabies booster booked', esc(slot) + ' · Paws Clinic');
+    closeSheet();
+    toast('Booked · added to the care thread');
+    return;
+  }
+
+  if ((t = e.target.closest('[data-multi]'))) { t.classList.toggle('on'); return; }
+  if ((t = e.target.closest('[data-one]'))) {
+    var grp = t.getAttribute('data-one');
+    $$('[data-one="' + grp + '"]').forEach(function (o) { o.classList.remove('on'); });
+    t.classList.add('on');
+    return;
+  }
+
+  /* --- navigation --- */
+
   if ((t = e.target.closest('[data-emergency]'))) { emergency(e); return; }
   if ((t = e.target.closest('[data-back]')))      { back(); return; }
-  if ((t = e.target.closest('[data-go]')))        { go(t.getAttribute('data-go')); return; }
   if ((t = e.target.closest('[data-tab-go]')))    { go(t.getAttribute('data-tab-go')); return; }
   if ((t = e.target.closest('[data-jump]')))      { go(t.getAttribute('data-jump'), 'fade'); return; }
 
-  if ((t = e.target.closest('[data-meal]'))) {
-    var on = t.classList.toggle('given');
-    t.querySelector('.word').textContent = on ? 'Given' : '7:00 pm';
-    toast(on ? 'Dinner logged &middot; 180 g' : 'Dinner unlogged');
+  /* --- app actions --- */
+
+  if ((t = e.target.closest('[data-call]'))) { placeCall(t, t.getAttribute('data-call')); return; }
+
+  if ((t = e.target.closest('[data-sheet]'))) { showSheet(t.getAttribute('data-sheet')); return; }
+  if ((t = e.target.closest('[data-close]'))) {
+    if (t.hasAttribute('data-toast')) { toast(t.getAttribute('data-toast')); }
+    closeSheet(); return;
+  }
+
+  if ((t = e.target.closest('[data-pet-index]'))) {
+    petIndex = parseInt(t.getAttribute('data-pet-index'), 10);
+    render();
+    var hs = $('#s-home');
+    $$('[data-count]', hs).forEach(function (n) { n.dataset.done = '0'; n.dataset.from = '0'; });
+    toast('Showing ' + esc(pet().name) + '’s thread');
     return;
   }
-  if ((t = e.target.closest('[data-switch]'))) { t.classList.toggle('on'); return; }
 
-  if ((t = e.target.closest('.pet'))) {
-    if (t.hasAttribute('data-pet')) {
-      $$('.pet').forEach(function (p) { p.classList.remove('on'); });
-      t.classList.add('on');
-      toast('Showing ' + t.getAttribute('data-pet') + '&rsquo;s thread');
-      return;
-    }
+  if ((t = e.target.closest('[data-answer]'))) {
+    var post = t.closest('.post');
+    $$('#s-community .post').forEach(function (x) { x.removeAttribute('data-answering'); });
+    if (post) { post.setAttribute('data-answering', '1'); }
+    showSheet('answer');
+    return;
   }
+
+  if ((t = e.target.closest('[data-like]'))) {
+    var on = t.classList.toggle('liked');
+    t.textContent = on ? 'Liked' : 'Like';
+    toast(on ? 'Liked' : 'Like removed');
+    return;
+  }
+
+  if ((t = e.target.closest('[data-log-thread]'))) {
+    addThreadEntry('Assistant note logged', 'Off food since last night · rice and curd tonight');
+    t.disabled = true;
+    t.innerHTML = '<svg width="19" height="19"><use href="#i-check"/></svg>Added to the thread';
+    toast('Added to ' + esc(pet().name) + '’s care thread');
+    return;
+  }
+
+  if ((t = e.target.closest('[data-meal]'))) {
+    var given = t.classList.toggle('given');
+    var word = t.querySelector('.word');
+    word.textContent = given ? 'Given' : t.getAttribute('data-time');
+    toast(given ? t.getAttribute('data-label') + ' logged · ' + Math.round(pet().grams / 2) + ' g'
+                : t.getAttribute('data-label') + ' unlogged');
+    return;
+  }
+
+  if ((t = e.target.closest('[data-switch]'))) {
+    var sw = t.classList.toggle('on');
+    toast(t.getAttribute('aria-label') + (sw ? ' on' : ' off'));
+    return;
+  }
+
   if ((t = e.target.closest('[data-pick]'))) {
     var group = t.getAttribute('data-pick');
     $$('[data-pick="' + group + '"]').forEach(function (c) { c.classList.remove('on'); });
     t.classList.add('on');
+    if (group === 'species') { previewSpecies(t.getAttribute('data-species')); }
     return;
   }
   if ((t = e.target.closest('[data-toggle]'))) { t.classList.toggle('on'); return; }
 
+  if ((t = e.target.closest('[data-go]')))   { go(t.getAttribute('data-go')); return; }
   if ((t = e.target.closest('[data-toast]'))) { toast(t.getAttribute('data-toast')); return; }
 }, false);
 
-/* ripple on filled buttons */
+/* picking a species in onboarding updates the copy on the next step
+   straight away, so step two never says "dog" for a cat */
+function previewSpecies(sp) {
+  if (!sp) return;
+  pet().species = sp;
+  render();
+}
+
+/* ripple */
 document.addEventListener('pointerdown', function (e) {
   var b = e.target.closest('.btn, .call');
   if (!b || reduced) return;
@@ -2027,14 +3049,13 @@ document.addEventListener('pointerdown', function (e) {
   s.style.left = (e.clientX - r.left) + 'px';
   s.style.top  = (e.clientY - r.top) + 'px';
   b.appendChild(s);
-  setTimeout(function () { s.remove(); }, 640);
+  setTimeout(function () { if (s.parentNode) s.parentNode.removeChild(s); }, 640);
 });
 
-/* ------------------------------------------------------------
-   screen-specific behaviour
-   ------------------------------------------------------------ */
+/* ============================================================
+   9. Sign in and onboarding
+   ============================================================ */
 
-/* password reveal */
 $('#revealPw').addEventListener('click', function () {
   var f = $('#pw'), shown = f.type === 'text';
   f.type = shown ? 'password' : 'text';
@@ -2042,7 +3063,6 @@ $('#revealPw').addEventListener('click', function () {
   this.setAttribute('aria-label', shown ? 'Show password' : 'Hide password');
 });
 
-/* sign in: button morphs to a spinner, then a tick, then hands off */
 $('#signinForm').addEventListener('submit', function (e) {
   e.preventDefault();
   var b = $('#signinBtn');
@@ -2061,7 +3081,6 @@ $('#signinForm').addEventListener('submit', function (e) {
   }, 1750);
 });
 
-/* onboarding steps */
 var step = 1;
 function setStep(n) {
   step = Math.max(1, Math.min(3, n));
@@ -2071,14 +3090,69 @@ function setStep(n) {
   $$('#s-onboard .steps i').forEach(function (i, n2) { i.classList.toggle('on', n2 < step); });
   $('#onboardNext').textContent = step === 3 ? 'Start the care thread' : 'Continue';
   $('#onboardBack').style.display = step === 1 ? 'none' : '';
+  $('#s-onboard').scrollTop = 0;
 }
+
+/* pull what the owner typed into state, then repaint the whole app */
+function applyOnboarding() {
+  var p = pet();
+  var sp = $('#s-onboard [data-pick="species"].on');
+  if (sp) { p.species = sp.getAttribute('data-species'); }
+
+  var nm = $('#petname').value.trim();
+  if (nm) { p.name = nm; }
+  var ow = $('#ownername').value.trim();
+  if (ow) { OWNER = ow; }
+  var bd = $('#breed').value.trim();
+  if (bd) { p.breed = bd; }
+
+  var wt = parseFloat($('#weight').value);
+  if (wt > 0) {
+    p.weight = Math.round(wt * 10) / 10;
+    p.grams = Math.max(40, Math.round(p.weight * 19.5 / 10) * 10);
+  }
+  var ag = $('#s-onboard [data-pick="age"].on');
+  if (ag) { p.age = ag.getAttribute('data-age'); p.years = parseFloat(ag.getAttribute('data-years')); }
+  var sx = $('#s-onboard [data-pick="sex"].on');
+  if (sx) { p.sex = sx.getAttribute('data-sex'); }
+
+  render();
+  $$('[data-count]').forEach(function (n) { n.dataset.done = '0'; n.dataset.from = '0'; });
+}
+
 $('#onboardNext').addEventListener('click', function () {
-  if (step === 3) { setStep(1); go('s-home'); toast('Bruno&rsquo;s thread is live'); }
-  else setStep(step + 1);
+  if (step === 1) {
+    var sp = $('#s-onboard [data-pick="species"].on');
+    if (sp) { pet().species = sp.getAttribute('data-species'); render(); }
+    setStep(2);
+  } else if (step === 2) {
+    applyOnboarding();
+    setStep(3);
+  } else {
+    applyOnboarding();
+    setStep(1);
+    go('s-home');
+    toast(esc(pet().name) + '’s thread is live');
+  }
 });
 $('#onboardBack').addEventListener('click', function () { setStep(step - 1); });
 
-/* assistant: type, then cascade the answer in */
+/* typing a name shows up immediately on the step-three copy */
+['petname', 'ownername', 'breed'].forEach(function (id) {
+  var el = document.getElementById(id);
+  if (!el) return;
+  el.addEventListener('input', function () {
+    if (id === 'ownername') { OWNER = el.value.trim() || 'there'; }
+    if (id === 'petname')   { pet().name = el.value.trim() || 'your pet'; }
+    if (id === 'breed')     { pet().breed = el.value.trim() || 'Not set'; }
+    render();
+  });
+});
+
+/* ============================================================
+   10. Assistant
+   ============================================================ */
+
 var assistantRan = false, assistantT = [];
 function runAssistant(force) {
   if (assistantRan && !force) return;
@@ -2094,7 +3168,6 @@ function runAssistant(force) {
   }, reduced ? 0 : 1500));
 }
 
-/* asking a question replays the answer */
 $('#askForm').addEventListener('submit', function (e) {
   e.preventDefault();
   var v = $('#askInput').value.trim();
@@ -2110,27 +3183,10 @@ $('#askForm').addEventListener('submit', function (e) {
   }, 60);
 });
 
-/* spending: adding an expense redraws the donut */
-$('#addExpense').addEventListener('click', function () {
-  var groom = SPEND[3];
-  if (groom.value > 0) { toast('Grooming already logged this month'); return; }
-  groom.value = 300;
-  var rows = $$('#s-spending .rows .row');
-  rows[3].classList.remove('faded');
-  rows[3].querySelector('.v').innerHTML = '&#8377;300';
-  var total = $('#s-spending [data-count]');
-  total.dataset.from = 2840;
-  total.setAttribute('data-count', '3140');
-  total.dataset.replay = '1';
-  countUp($('#s-spending'));
-  drawDonut();
-  $('#s-spending').classList.remove('settled');
-  void $('#s-spending').offsetWidth;
-  $('#s-spending').classList.add('settled');
-  toast('&#8377;300 logged to Grooming');
-});
+/* ============================================================
+   11. Pull to refresh
+   ============================================================ */
 
-/* pull to refresh on home */
 (function () {
   var home = $('#s-home'), knob = $('#refresh');
   var y0 = null, pull = 0;
@@ -2143,10 +3199,10 @@ $('#addExpense').addEventListener('click', function () {
     pull = Math.max(0, e.clientY - y0);
     if (pull > 4) {
       knob.classList.add('pull');
-      knob.style.transform = 'translateY(' + Math.min(pull * .45, 46) + 'px) rotate(' + pull + 'deg)';
+      knob.style.transform = 'translateY(' + Math.min(pull * 0.45, 46) + 'px) rotate(' + pull + 'deg)';
     }
   });
-  home.addEventListener('pointerup', function () {
+  function release() {
     if (y0 === null) return;
     if (pull > 70) {
       knob.classList.add('spin');
@@ -2161,13 +3217,17 @@ $('#addExpense').addEventListener('click', function () {
       knob.style.transform = '';
     }
     y0 = null;
+  }
+  home.addEventListener('pointerup', release);
+  home.addEventListener('pointercancel', function () {
+    y0 = null; knob.classList.remove('pull'); knob.style.transform = '';
   });
-  home.addEventListener('pointercancel', function () { y0 = null; knob.classList.remove('pull'); knob.style.transform = ''; });
 })();
 
-/* ------------------------------------------------------------
-   presenter shell
-   ------------------------------------------------------------ */
+/* ============================================================
+   12. Presenter shell
+   ============================================================ */
+
 var list = $('#jumplist');
 ORDER.forEach(function (id) {
   var el = screenEl(id);
@@ -2186,6 +3246,7 @@ function togglePresenter(on) {
 }
 
 document.addEventListener('keydown', function (e) {
+  if (e.key === 'Escape' && sheetOpen) { closeSheet(); return; }
   if (e.target.matches('input, textarea')) { if (e.key === 'Escape') e.target.blur(); return; }
   var i = ORDER.indexOf(current);
   if (e.key === 'ArrowRight') { go(ORDER[Math.min(ORDER.length - 1, i + 1)], 'fade'); }
@@ -2202,21 +3263,23 @@ document.addEventListener('keydown', function (e) {
   else if (e.key === 'Escape') { togglePresenter(false); }
 });
 
-/* hide the keyboard nudge once they have used it */
-setTimeout(function () { $('#nudge').style.opacity = .35; }, 9000);
+setTimeout(function () { $('#nudge').style.opacity = 0.35; }, 9000);
 
-/* ------------------------------------------------------------
-   launch
-   ------------------------------------------------------------ */
+/* ============================================================
+   13. Launch
+   ============================================================ */
+
 var start = (location.search.match(/screen=([\w-]+)/) || [])[1];
 start = start ? ('s-' + start.replace(/^s-/, '')) : 's-signin';
 if (!screenEl(start)) start = 's-signin';
 
 setStep(1);
+render();
 
 setTimeout(function () {
-  $('#boot').classList.add('gone');
-  setTimeout(function () { $('#boot').remove(); }, 700);
+  var boot = $('#boot');
+  boot.classList.add('gone');
+  setTimeout(function () { if (boot.parentNode) boot.parentNode.removeChild(boot); }, 700);
   var el = screenEl(start);
   el.classList.add('is-active');
   current = start;

@@ -25,7 +25,9 @@
     </g>
   </pattern>
 
-  <g id="pup">
+  <!-- Four animals on one skeleton: same body, head, eyes and tail anchor, so a
+       single set of animation rules drives whichever species the owner picked. -->
+  <g id="pup-dog" class="pet-art">
     <path class="tail" d="M40 132C20 122 14 100 24 84" fill="none" stroke="#C08E7D" stroke-width="11" stroke-linecap="round"/>
     <ellipse cx="110" cy="150" rx="72" ry="44" fill="#D9AFA1"/>
     <ellipse cx="104" cy="166" rx="30" ry="26" fill="#F3E4DD"/>
@@ -39,6 +41,55 @@
     <rect class="lid" x="164" y="78" width="12" height="11" rx="5" fill="#D9AFA1" style="transform-origin:170px 78px"/>
     <ellipse cx="152" cy="108" rx="8" ry="5.6" fill="#4A342C"/>
     <path d="M152 114v5M152 119c-3.5 3.5-9 2.5-10-1M152 119c3.5 3.5 9 2.5 10-1" stroke="#4A342C" stroke-width="2.4" fill="none" stroke-linecap="round"/>
+  </g>
+
+  <g id="pup-cat" class="pet-art">
+    <path class="tail" d="M40 132C14 126 6 96 26 78 38 67 52 74 50 86" fill="none" stroke="#B8ADA0" stroke-width="10" stroke-linecap="round"/>
+    <ellipse cx="110" cy="150" rx="70" ry="43" fill="#CFC5B7"/>
+    <ellipse cx="104" cy="166" rx="28" ry="24" fill="#F1EDE5"/>
+    <g class="ear-l"><path d="M116 62 106 16 148 42Z" fill="#B8ADA0"/><path d="M120 58 114 30 138 45Z" fill="#E8C9C0"/></g>
+    <g class="ear-r"><path d="M188 62 198 16 156 42Z" fill="#B8ADA0"/><path d="M184 58 190 30 166 45Z" fill="#E8C9C0"/></g>
+    <circle cx="152" cy="90" r="46" fill="#CFC5B7"/>
+    <ellipse cx="152" cy="114" rx="22" ry="15" fill="#F1EDE5"/>
+    <ellipse cx="136" cy="84" rx="4.6" ry="6.4" fill="#3E4A3C"/>
+    <ellipse cx="170" cy="84" rx="4.6" ry="6.4" fill="#3E4A3C"/>
+    <rect class="lid" x="130" y="76" width="12" height="12" rx="5" fill="#CFC5B7" style="transform-origin:136px 76px"/>
+    <rect class="lid" x="164" y="76" width="12" height="12" rx="5" fill="#CFC5B7" style="transform-origin:170px 76px"/>
+    <path d="M145 106h14l-7 7Z" fill="#D08C86"/>
+    <path d="M152 113v5M152 118c-3 3-8 2-9-1M152 118c3 3 8 2 9-1" stroke="#3E4A3C" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <path d="M126 104 100 99M126 110 101 112M178 104 204 99M178 110 203 112" stroke="#8C8272" stroke-width="1.8" stroke-linecap="round"/>
+  </g>
+
+  <g id="pup-rabbit" class="pet-art">
+    <circle class="tail" cx="42" cy="140" r="15" fill="#F1E7E2"/>
+    <ellipse cx="112" cy="152" rx="66" ry="42" fill="#D8CBC6"/>
+    <ellipse cx="106" cy="166" rx="26" ry="23" fill="#F5EEEB"/>
+    <g class="ear-l"><ellipse cx="128" cy="30" rx="13" ry="44" fill="#D8CBC6"/><ellipse cx="128" cy="34" rx="6.5" ry="34" fill="#EBC8C2"/></g>
+    <g class="ear-r"><ellipse cx="178" cy="30" rx="13" ry="44" fill="#D8CBC6"/><ellipse cx="178" cy="34" rx="6.5" ry="34" fill="#EBC8C2"/></g>
+    <circle cx="152" cy="96" r="44" fill="#D8CBC6"/>
+    <ellipse cx="152" cy="118" rx="21" ry="14" fill="#F5EEEB"/>
+    <circle cx="137" cy="90" r="5" fill="#4A3C3C"/>
+    <circle cx="168" cy="90" r="5" fill="#4A3C3C"/>
+    <rect class="lid" x="131" y="84" width="12" height="11" rx="5" fill="#D8CBC6" style="transform-origin:137px 84px"/>
+    <rect class="lid" x="162" y="84" width="12" height="11" rx="5" fill="#D8CBC6" style="transform-origin:168px 84px"/>
+    <path d="M146 110h13l-6.5 6Z" fill="#C98A86"/>
+    <path d="M152 116v4M152 120c-3 3-8 2-9-1M152 120c3 3 8 2 9-1" stroke="#4A3C3C" stroke-width="2.2" fill="none" stroke-linecap="round"/>
+    <path d="M148 126h9" stroke="#C98A86" stroke-width="2.4" stroke-linecap="round"/>
+  </g>
+
+  <g id="pup-bird" class="pet-art">
+    <path class="tail" d="M46 138C24 148 12 168 16 182 30 180 44 168 52 154" fill="#A8B79F"/>
+    <ellipse cx="118" cy="140" rx="62" ry="52" fill="#BCCBB2"/>
+    <ellipse cx="112" cy="156" rx="26" ry="28" fill="#EFF3EA"/>
+    <path class="wing" d="M96 118C74 122 62 142 70 162 84 158 96 142 100 126Z" fill="#A8B79F" style="transform-origin:98px 120px"/>
+    <circle cx="152" cy="84" r="42" fill="#BCCBB2"/>
+    <circle cx="139" cy="78" r="5" fill="#37402F"/>
+    <circle cx="170" cy="78" r="5" fill="#37402F"/>
+    <rect class="lid" x="133" y="72" width="12" height="11" rx="5" fill="#BCCBB2" style="transform-origin:139px 72px"/>
+    <rect class="lid" x="164" y="72" width="12" height="11" rx="5" fill="#BCCBB2" style="transform-origin:170px 72px"/>
+    <path d="M150 92 186 100 150 110Z" fill="#E8A33D"/>
+    <path d="M138 44c4-12 18-16 26-10" stroke="#A8B79F" stroke-width="7" fill="none" stroke-linecap="round"/>
+    <path d="M124 186h16M148 186h16" stroke="#E8A33D" stroke-width="4" stroke-linecap="round"/>
   </g>
 
   <g id="i-home" stroke="currentColor" stroke-width="1.7" fill="none" stroke-linecap="round" stroke-linejoin="round">
@@ -144,7 +195,7 @@
 
         <div class="signin-foot rise" style="--d:3">
           <label class="check"><input type="checkbox" checked><span class="box"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.6 4.5L19 7"/></svg></span>Keep me signed in</label>
-          <button class="link" type="button" data-toast="We sent a reset link to aarav@pawpal.in">Forgot password?</button>
+          <button class="link" type="button" data-sheet="forgot">Forgot password?</button>
         </div>
 
         <div class="rise" style="--d:4"><div style="height:22px"></div>
@@ -165,27 +216,56 @@
         <h1 class="display rise" style="--d:1; margin-top:26px">Who are we<br>caring for?</h1>
         <p class="subhead rise" style="--d:2">You can add the rest of the family later.</p>
         <div class="rise" style="--d:3; margin-top:24px">
-          <button class="choice on" data-pick="species"><span class="em">&#128021;</span>Dog<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
-          <button class="choice" data-pick="species"><span class="em">&#128008;</span>Cat<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
-          <button class="choice" data-pick="species"><span class="em">&#128048;</span>Rabbit<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
-          <button class="choice" data-pick="species"><span class="em">&#129417;</span>Bird<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
+          <button class="choice on" data-pick="species" data-species="dog"><span class="em">&#128021;</span>Dog<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
+          <button class="choice" data-pick="species" data-species="cat"><span class="em">&#128008;</span>Cat<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
+          <button class="choice" data-pick="species" data-species="rabbit"><span class="em">&#128048;</span>Rabbit<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
+          <button class="choice" data-pick="species" data-species="bird"><span class="em">&#129417;</span>Bird<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
         </div>
       </div>
 
       <div class="step" data-step="2">
-        <h1 class="display" style="margin-top:26px">Tell us about<br>your dog</h1>
-        <p class="subhead">We use this to size meals and doses.</p>
-        <label class="form-label eyebrow" for="petname">Name</label>
-        <input class="field" id="petname" value="Bruno">
+        <h1 class="display" style="margin-top:26px">Tell us about<br>your <span data-bind="species">dog</span></h1>
+        <p class="subhead">Everything on this screen shows up across the app.</p>
+
+        <div class="field-pair">
+          <div>
+            <label class="form-label eyebrow" for="petname">Pet&rsquo;s name</label>
+            <input class="field" id="petname" value="Bruno" autocomplete="off" maxlength="18">
+          </div>
+          <div>
+            <label class="form-label eyebrow" for="ownername">Your name</label>
+            <input class="field" id="ownername" value="Aarav" autocomplete="off" maxlength="18">
+          </div>
+        </div>
+
+        <div class="field-pair">
+          <div>
+            <label class="form-label eyebrow" for="breed">Breed</label>
+            <input class="field" id="breed" value="Indie" autocomplete="off" maxlength="20">
+          </div>
+          <div>
+            <label class="form-label eyebrow" for="weight">Weight (kg)</label>
+            <input class="field" id="weight" type="number" step="0.1" min="0.2" max="90" value="18.4">
+          </div>
+        </div>
+
         <label class="form-label eyebrow">Age</label>
-        <button class="choice" data-pick="age"><span class="em">&#127874;</span>Under 1 year<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
-        <button class="choice on" data-pick="age"><span class="em">&#127874;</span>1 to 7 years<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
-        <button class="choice" data-pick="age"><span class="em">&#127874;</span>Over 7 years<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
+        <div class="chip-row">
+          <button class="chip" data-pick="age" data-age="Under 1" data-years="0.6">Under 1 year</button>
+          <button class="chip on" data-pick="age" data-age="4 yr" data-years="4">1 to 7 years</button>
+          <button class="chip" data-pick="age" data-age="9 yr" data-years="9">Over 7 years</button>
+        </div>
+
+        <label class="form-label eyebrow">Sex</label>
+        <div class="chip-row">
+          <button class="chip on" data-pick="sex" data-sex="male">Male</button>
+          <button class="chip" data-pick="sex" data-sex="female">Female</button>
+        </div>
       </div>
 
       <div class="step" data-step="3">
         <h1 class="display" style="margin-top:26px">What should<br>we remind you<br>about?</h1>
-        <p class="subhead">Each one becomes an entry on the care thread.</p>
+        <p class="subhead">Each one becomes an entry on <span data-bind="name-poss">Bruno&rsquo;s</span> care thread.</p>
         <div style="margin-top:20px">
           <button class="choice on" data-toggle="1"><span class="em">&#127859;</span>Meals<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
           <button class="choice on" data-toggle="1"><span class="em">&#128138;</span>Medicines<span class="tick"><svg width="20" height="20"><use href="#i-check"/></svg></span></button>
@@ -206,20 +286,16 @@
       <div class="refresh" id="refresh"><svg width="22" height="22"><use href="#i-paw"/></svg></div>
 
       <div class="head-row">
-        <h1 class="display rise" style="--d:0">Good morning,<br>Aarav</h1>
+        <h1 class="display rise" style="--d:0"><span data-bind="greeting">Good morning</span>,<br><span data-bind="owner">Aarav</span></h1>
         <button class="pill alarm rise" style="--d:1" data-emergency><span class="beacon"></span>Emergency</button>
       </div>
-      <p class="subhead rise" style="--d:1">Thursday, 21 August</p>
+      <p class="subhead rise" style="--d:1" data-bind="today">Thursday, 21 August</p>
 
-      <div class="pets rise" style="--d:2">
-        <button class="pet on" data-pet="Bruno"><span class="ring" style="background:linear-gradient(150deg,#EFD8D0,#E7C8BE)"><svg width="30" height="30" viewBox="60 40 190 170"><use href="#pup"/></svg></span>Bruno</button>
-        <button class="pet" data-pet="Mishti"><span class="ring" style="background:linear-gradient(150deg,#DCE4DA,#C9D6C6)"><svg width="26" height="26" style="color:#5B6B58"><use href="#i-paw"/></svg></span>Mishti</button>
-        <button class="pet" data-toast="Add a second pet to this thread"><span class="ring add"><svg width="20" height="20"><use href="#i-plus"/></svg></span>Add</button>
-      </div>
+      <div class="pets rise" style="--d:2" id="petRow"></div>
 
       <button class="ask rise" style="--d:3" data-go="s-assistant">
         <span class="spark"><svg width="18" height="18"><use href="#i-paw"/></svg></span>
-        How is Bruno today?
+        How is <span data-bind="name">Bruno</span> today?
       </button>
 
       <div class="thread-head rise" style="--d:4">
@@ -251,29 +327,29 @@
     <section class="screen" id="s-assistant" data-name="AI Assistant &middot; structured answers" data-tab="chat" style="padding-bottom:178px">
       <div class="head-row rise" style="--d:0">
         <h1 class="display">Assistant</h1>
-        <button class="link" style="color:var(--slate); font-weight:400; font-size:15px" data-go="s-profile">About Bruno</button>
+        <button class="link" style="color:var(--slate); font-weight:400; font-size:15px" data-go="s-profile">About <span data-bind="name">Bruno</span></button>
       </div>
 
       <div id="thread-chat">
-        <div class="bubble-me rise" style="--d:1">He&rsquo;s been off his food since last night and slept most of today.</div>
+        <div class="bubble-me rise" style="--d:1"><span data-bind="They">He</span> has been off <span data-bind="their">his</span> food since last night and slept most of today.</div>
         <p class="eyebrow rise" style="--d:2" id="assistantLabel" hidden>Assistant</p>
         <div class="typing rise" id="typing" style="--d:2"><i></i><i></i><i></i></div>
 
         <div class="card answer" id="answer" hidden>
           <div class="part" style="--d:0">
             <p class="eyebrow">What it might be</p>
-            <p>Reduced appetite with low energy for under 24 hours is often a mild stomach upset. Bruno is also on day 4 of carprofen, which can put dogs off food.</p>
+            <p>Reduced appetite with low energy for under 24 hours is often a mild stomach upset. <span data-bind="name">Bruno</span> is also on day 4 of carprofen, which can put <span data-bind="speciesPlural">dogs</span> off food.</p>
           </div>
           <div class="part" style="--d:1">
             <p class="eyebrow">What to do now</p>
-            <p>Offer plain boiled rice and chicken in small portions. Keep water available and give the 2 pm tablet with food, not on an empty stomach. Note how much he eats tonight.</p>
+            <p>Offer plain boiled rice and chicken in small portions. Keep water available and give the 2 pm tablet with food, not on an empty stomach. Note how much <span data-bind="they">he</span> eats tonight.</p>
           </div>
           <div class="part" style="--d:2">
             <p class="eyebrow">When to see a vet</p>
-            <p>If he refuses food for another 24 hours, vomits more than twice, or the gums look pale, call Dr. Menon the same day.</p>
+            <p>If <span data-bind="they">he</span> refuses food for another 24 hours, vomits more than twice, or the gums look pale, call Dr. Menon the same day.</p>
           </div>
           <div class="part" style="--d:3">
-            <button class="btn ghost" data-toast="Added to the care thread &middot; 11:24 am">Log this in the thread</button>
+            <button class="btn ghost" data-log-thread="1">Log this in the thread</button>
           </div>
         </div>
       </div>
@@ -281,7 +357,7 @@
       <div class="composer">
         <p class="disclaimer">Guidance only. It does not replace a veterinarian.</p>
         <form id="askForm">
-          <input class="field" id="askInput" placeholder="Ask about Bruno" autocomplete="off">
+          <input class="field" id="askInput" placeholder="Ask about Bruno" data-ph="askPlaceholder" autocomplete="off">
           <button class="send" type="submit" aria-label="Send"><svg width="19" height="19"><use href="#i-up"/></svg></button>
         </form>
       </div>
@@ -293,20 +369,20 @@
         <p class="eyebrow">Emergency</p>
         <button class="em-close" data-back>Close</button>
       </div>
-      <h1 class="display rise" style="--d:1; margin-top:22px">Bruno needs<br>a vet now</h1>
-      <p class="subhead rise" style="--d:2">Sharing his records and your location with whoever answers.</p>
+      <h1 class="display rise" style="--d:1; margin-top:22px"><span data-bind="name">Bruno</span> needs<br>a vet now</h1>
+      <p class="subhead rise" style="--d:2">Sharing <span data-bind="their">his</span> records and your location with whoever answers.</p>
 
-      <button class="call rise" style="--d:3" data-toast="Calling City Pet Hospital&hellip;">
+      <button class="call rise" style="--d:3" data-call="City Pet Hospital">
         <svg width="21" height="21"><use href="#i-phone"/></svg>Call City Pet Hospital</button>
 
       <div class="rows rise" style="--d:4">
-        <button class="row" data-toast="Calling City Pet Hospital&hellip;">
+        <button class="row" data-call="City Pet Hospital">
           <span><span class="k">City Pet Hospital</span><br><span class="v">2.4 km &middot; open 24 hours &middot; Koramangala</span></span>
           <svg class="chev" width="20" height="20"><use href="#i-chev"/></svg></button>
-        <button class="row" data-toast="Pet ambulance requested">
+        <button class="row" data-call="Pet ambulance">
           <span><span class="k">Pet ambulance</span><br><span class="v">Pickup in about 14 min</span></span>
           <svg class="chev" width="20" height="20"><use href="#i-chev"/></svg></button>
-        <button class="row" data-toast="Dr. Menon opens at 9:00 am">
+        <button class="row" data-call="Dr. Menon">
           <span><span class="k">Dr. Menon &middot; your vet</span><br><span class="v">Closed now &middot; opens 9:00 am</span></span>
           <svg class="chev" width="20" height="20"><use href="#i-chev"/></svg></button>
       </div>
@@ -314,8 +390,8 @@
       <div class="vitals rise" style="--d:5">
         <p class="eyebrow">Read this to the vet</p>
         <dl>
-          <dt>Weight</dt><dd>18.4 kg</dd>
-          <dt>Allergies</dt><dd>Chicken, dust mites</dd>
+          <dt>Weight</dt><dd><span data-bind="weight">18.4</span> kg</dd>
+          <dt>Allergies</dt><dd data-bind="allergies">Chicken, dust mites</dd>
           <dt>Blood group</dt><dd>DEA 1.1 negative</dd>
           <dt>On medication</dt><dd>Carprofen, day 4</dd>
           <dt>Microchip</dt><dd class="num">985 141 000 273 118</dd>
@@ -330,47 +406,58 @@
 
     <!-- ========== PET PROFILE ========== -->
     <section class="screen flush edge has-tabs" id="s-profile" data-name="Pet profile &middot; dossier" data-tab="person">
-      <div class="portrait bleed">
+
+      <header class="pet-hero bleed">
         <svg class="paws" aria-hidden="true"><rect width="100%" height="100%" fill="url(#pawpat)"/></svg>
-        <svg class="pup" viewBox="0 0 240 200"><use href="#pup"/></svg>
-        <button class="pill" style="position:absolute; top:62px; right:22px; background:rgba(255,255,255,.72); border-color:transparent" data-go="s-settings">
-          <svg width="17" height="17"><use href="#i-gear"/></svg>Settings</button>
-        <div>
-          <h1 class="display portrait-name rise" style="--d:0; font-size:44px">Bruno</h1>
-          <p class="tagline rise" style="--d:1">Indie &middot; male &middot; with you since March 2022</p>
+        <button class="icon-btn" data-go="s-settings" aria-label="Settings">
+          <svg width="19" height="19"><use href="#i-gear"/></svg></button>
+
+        <div class="pet-avatar rise" style="--d:0">
+          <svg viewBox="20 10 210 180"><use class="pet-use" href="#pup-dog"/></svg>
         </div>
+        <h1 class="display rise" style="--d:1" data-bind="name">Bruno</h1>
+        <p class="chip-line rise" style="--d:2">
+          <span data-bind="breed">Indie</span>
+          <span data-bind="sex">Male</span>
+          <span data-bind="age">4 yr</span>
+        </p>
+      </header>
+
+      <div class="stat-card bleed rise" style="--d:3">
+        <div class="stat"><span class="figure" data-count="4" data-suffix=" yr" data-bind-count="years">4 yr</span><p class="eyebrow">Age</p></div>
+        <div class="stat"><span class="figure" data-count="18.4" data-dec="1" data-bind-count="weight">18.4</span><p class="eyebrow">kg</p></div>
+        <div class="stat"><span class="figure fit" data-bind="breed">Indie</span><p class="eyebrow">Breed</p></div>
       </div>
 
-      <div class="stat-card bleed rise" style="--d:2">
-        <div class="stat"><span class="figure" data-count="4" data-suffix=" yr">4 yr</span><p class="eyebrow">Age</p></div>
-        <div class="stat"><span class="figure" data-count="18.4" data-dec="1">18.4</span><p class="eyebrow">kg</p></div>
-        <div class="stat"><span class="figure">Indie</span><p class="eyebrow">Breed</p></div>
-      </div>
-
-      <p class="eyebrow rise" style="--d:3; margin-top:30px">Vitals on file</p>
-      <div class="rows rise" style="--d:3">
-        <div class="row"><span class="k">Allergies</span><span class="v">Chicken, dust mites</span></div>
-        <div class="row"><span class="k">Blood group</span><span class="v">DEA 1.1 negative</span></div>
-        <div class="row"><span class="k">Microchip</span><span class="v num">985 141 000 273 118</span></div>
-        <div class="row"><span class="k">Insurance</span><span class="v">Bajaj &middot; valid to Mar 2027</span></div>
-        <div class="row"><span class="k">Neutered</span><span class="v">Yes &middot; Jan 2023</span></div>
-      </div>
-
-      <p class="eyebrow rise" style="--d:4; margin-top:30px">Care</p>
+      <p class="eyebrow section-gap rise" style="--d:4">Care</p>
       <div class="link-grid rise" style="--d:4">
         <button class="link-card" data-go="s-vaccines"><svg class="ic"><use href="#i-vax"/></svg><b>Vaccinations</b><span>One due in 7 days</span></button>
         <button class="link-card" data-go="s-records"><svg class="ic"><use href="#i-file"/></svg><b>Records</b><span>9 on file</span></button>
-        <button class="link-card" data-go="s-feeding"><svg class="ic"><use href="#i-bowl"/></svg><b>Feeding</b><span>360 g per day</span></button>
-        <button class="link-card" data-go="s-growth"><svg class="ic"><use href="#i-trend"/></svg><b>Growth</b><span>18.4 kg, steady</span></button>
-        <button class="link-card" data-go="s-spending"><svg class="ic"><use href="#i-coin"/></svg><b>Spending</b><span>&#8377;2,840 in August</span></button>
+        <button class="link-card" data-go="s-feeding"><svg class="ic"><use href="#i-bowl"/></svg><b>Feeding</b><span><span data-bind="grams">360</span> g per day</span></button>
+        <button class="link-card" data-go="s-growth"><svg class="ic"><use href="#i-trend"/></svg><b>Growth</b><span><span data-bind="weight">18.4</span> kg, steady</span></button>
+        <button class="link-card" data-go="s-spending"><svg class="ic"><use href="#i-coin"/></svg><b>Spending</b><span>&#8377;<span data-bind="spend">2,840</span> in August</span></button>
         <button class="link-card alarm" data-go="s-poster"><svg class="ic"><use href="#i-poster"/></svg><b>Lost poster</b><span>Ready to share</span></button>
       </div>
 
-      <p class="eyebrow rise" style="--d:5; margin-top:30px">Medical history</p>
+      <p class="eyebrow section-gap rise" style="--d:5">Vitals on file</p>
       <div class="rows rise" style="--d:5">
-        <div class="row"><span class="k">14 Aug</span><span class="v">Annual check &middot; all clear</span></div>
-        <div class="row"><span class="k">02 Jun</span><span class="v">Tick fever &middot; full recovery</span></div>
+        <button class="row" data-sheet="allergies"><span class="k">Allergies</span><span class="v" data-bind="allergies">Chicken, dust mites</span></button>
+        <div class="row"><span class="k">Blood group</span><span class="v">DEA 1.1 negative</span></div>
+        <div class="row"><span class="k">Microchip</span><span class="v num">985 141 000 273 118</span></div>
+        <div class="row"><span class="k">Insurance</span><span class="v">Bajaj &middot; valid to Mar 2027</span></div>
+        <div class="row"><span class="k">With you since</span><span class="v" data-bind="since">March 2022</span></div>
+      </div>
+
+      <p class="eyebrow section-gap rise" style="--d:6">Medical history</p>
+      <div class="rows rise" style="--d:6">
+        <div class="row"><span class="k">14 Aug 2026</span><span class="v">Annual check &middot; all clear</span></div>
+        <div class="row"><span class="k">02 Jun 2026</span><span class="v">Tick fever &middot; full recovery</span></div>
         <div class="row"><span class="k">09 Aug 2025</span><span class="v">Rabies + DHPPi booster</span></div>
+      </div>
+
+      <div class="rise" style="--d:7; margin-top:24px">
+        <button class="btn ghost" data-sheet="edit-pet">
+          <svg width="18" height="18"><use href="#i-gear"/></svg>Edit <span data-bind="name">Bruno</span>&rsquo;s details</button>
       </div>
     </section>
 
@@ -378,7 +465,7 @@
     <section class="screen" id="s-vaccines" data-name="Vaccination tracker &middot; timeline" data-tab="">
       <div class="navbar rise" style="--d:0">
         <button class="back" data-back aria-label="Back"><svg width="22" height="22"><use href="#i-back"/></svg></button>
-        <span class="crumb">Bruno &middot; care</span>
+        <span class="crumb"><span data-bind="name">Bruno</span> &middot; care</span>
       </div>
       <h1 class="display rise" style="--d:1">Vaccinations</h1>
       <p class="subhead rise" style="--d:2">One due in 7 days. Everything else is current.</p>
@@ -392,7 +479,7 @@
             <h4>Rabies booster</h4>
             <p class="meta">Annual &middot; last given 30 Aug 2025</p>
             <div style="height:16px"></div>
-            <button class="btn" data-toast="Held 28 Aug, 5:30 pm at Paws Clinic">Book at Paws Clinic</button>
+            <button class="btn" data-sheet="book-vax">Book at Paws Clinic</button>
           </div>
         </div>
         <div class="vax-item" style="--d:1">
@@ -416,7 +503,7 @@
     <section class="screen" id="s-records" data-name="Health records" data-tab="">
       <div class="navbar rise" style="--d:0">
         <button class="back" data-back aria-label="Back"><svg width="22" height="22"><use href="#i-back"/></svg></button>
-        <span class="crumb">Bruno &middot; care</span>
+        <span class="crumb"><span data-bind="name">Bruno</span> &middot; care</span>
       </div>
       <h1 class="display rise" style="--d:1">Records</h1>
 
@@ -425,7 +512,7 @@
           <p class="eyebrow">Weight</p>
           <span class="label num">+0.3 in 6 weeks</span>
         </div>
-        <p class="figure" style="font-size:34px; margin:4px 0 0">18.4 kg</p>
+        <p class="figure" style="font-size:34px; margin:4px 0 0"><span data-bind="weight">18.4</span> kg</p>
         <svg class="chart" viewBox="0 0 300 92" preserveAspectRatio="none" style="height:92px; margin-top:14px">
           <path class="area" style="--o:1" d="M0,74 L50,68 L100,70 L150,54 L200,42 L250,32 L300,22 L300,92 L0,92 Z"/>
           <path class="line" d="M0,74 L50,68 L100,70 L150,54 L200,42 L250,32 L300,22"/>
@@ -454,7 +541,7 @@
       </div>
 
       <div class="rise" style="--d:5; margin-top:24px">
-        <button class="btn ghost" data-toast="Point the camera at a prescription to file it">
+        <button class="btn ghost" data-sheet="add-record">
           <svg width="19" height="19"><use href="#i-plus"/></svg>Add record</button>
       </div>
     </section>
@@ -463,23 +550,23 @@
     <section class="screen" id="s-feeding" data-name="Feeding planner" data-tab="">
       <div class="navbar rise" style="--d:0">
         <button class="back" data-back aria-label="Back"><svg width="22" height="22"><use href="#i-back"/></svg></button>
-        <span class="crumb">Bruno &middot; care</span>
+        <span class="crumb"><span data-bind="name">Bruno</span> &middot; care</span>
       </div>
       <h1 class="display rise" style="--d:1">Feeding</h1>
-      <p class="subhead rise" style="--d:2">For 18.4 kg, moderately active, chicken-free.</p>
+      <p class="subhead rise" style="--d:2">For <span data-bind="weight">18.4</span> kg, moderately active, chicken-free.</p>
 
       <div class="hero-figure rise" style="--d:3">
-        <span class="figure" data-count="360">360</span><span class="unit">g per day</span>
+        <span class="figure" data-count="360" data-bind-count="grams">360</span><span class="unit">g per day</span>
       </div>
-      <p class="label rise" style="--d:3">Two meals of 180 g &middot; 1,240 kcal</p>
+      <p class="label rise" style="--d:3">Two meals of <span data-bind="halfGrams">180</span> g &middot; <span data-bind="kcal">1,240</span> kcal</p>
 
       <div class="rise" style="--d:4; margin-top:28px">
-        <button class="meal given" data-meal>
-          <div class="t"><b>Breakfast</b><span>7:30 am &middot; 180 g kibble</span></div>
+        <button class="meal given" data-meal data-label="Breakfast" data-time="7:30 am">
+          <div class="t"><b>Breakfast</b><span>7:30 am &middot; <span data-bind="halfGrams">180</span> g kibble</span></div>
           <span class="state"><span class="tick"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.6 4.5L19 7"/></svg></span><span class="word">Given</span></span>
         </button>
-        <button class="meal" data-meal>
-          <div class="t"><b>Dinner</b><span>7:00 pm &middot; 180 g kibble + curd</span></div>
+        <button class="meal" data-meal data-label="Dinner" data-time="7:00 pm">
+          <div class="t"><b>Dinner</b><span>7:00 pm &middot; <span data-bind="halfGrams">180</span> g kibble + curd</span></div>
           <span class="state"><span class="tick"><svg viewBox="0 0 24 24" width="13" height="13" fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12.5l4.6 4.5L19 7"/></svg></span><span class="word">7:00 pm</span></span>
         </button>
       </div>
@@ -488,7 +575,7 @@
       <p class="body rise" style="--d:5">Chicken in any form, including treats and broth. Grapes, onion, chocolate, xylitol.</p>
 
       <div class="rise" style="--d:6; margin-top:26px">
-        <button class="btn ghost" data-toast="Bowl weighed at 182 g">Log a different portion</button>
+        <button class="btn ghost" data-sheet="log-portion">Change the daily portion</button>
       </div>
     </section>
 
@@ -496,13 +583,13 @@
     <section class="screen" id="s-growth" data-name="Growth tracker" data-tab="">
       <div class="navbar rise" style="--d:0">
         <button class="back" data-back aria-label="Back"><svg width="22" height="22"><use href="#i-back"/></svg></button>
-        <span class="crumb">Bruno &middot; care</span>
+        <span class="crumb"><span data-bind="name">Bruno</span> &middot; care</span>
       </div>
       <h1 class="display rise" style="--d:1">Growth</h1>
       <div class="hero-figure rise" style="--d:2">
-        <span class="figure" style="font-size:62px" data-count="18.4" data-dec="1">18.4</span><span class="unit">kg</span>
+        <span class="figure" style="font-size:62px" data-count="18.4" data-dec="1" data-bind-count="weight">18.4</span><span class="unit">kg</span>
       </div>
-      <p class="subhead rise" style="--d:2">Inside the breed-normal band for Indie, 4 years.</p>
+      <p class="subhead rise" style="--d:2">Inside the breed-normal band for <span data-bind="breed">Indie</span>, <span data-bind="age">4 yr</span>.</p>
 
       <div class="card rise" style="--d:3; margin-top:22px">
         <svg class="chart" viewBox="0 0 300 196" preserveAspectRatio="none" style="height:196px">
@@ -522,14 +609,14 @@
       </div>
 
       <div class="rise" style="--d:5; margin-top:24px">
-        <button class="btn ghost" data-toast="Weight logged &middot; 18.4 kg today">Log today&rsquo;s weight</button>
+        <button class="btn ghost" data-sheet="log-weight">Log today&rsquo;s weight</button>
       </div>
     </section>
 
     <!-- ========== SPENDING ========== -->
     <section class="screen has-tabs" id="s-spending" data-name="Expense tracker" data-tab="heart">
       <h1 class="display rise" style="--d:0">Spending</h1>
-      <p class="figure rise" style="--d:1; font-size:58px; margin:10px 0 0">&#8377;<span data-count="2840" data-comma="1">2,840</span></p>
+      <p class="figure rise" style="--d:1; font-size:58px; margin:10px 0 0">&#8377;<span data-count="2840" data-comma="1" id="spendTotal">2,840</span></p>
       <p class="subhead rise" style="--d:1">August &middot; &#8377;460 less than July</p>
 
       <div class="donut-wrap rise" style="--d:2">
@@ -547,15 +634,10 @@
         </div>
       </div>
 
-      <div class="rows rise" style="--d:3">
-        <div class="row"><span class="k" style="color:var(--ink)">Food</span><span class="v num">&#8377;1,650</span></div>
-        <div class="row"><span class="k" style="color:var(--ink)">Vet</span><span class="v num">&#8377;890</span></div>
-        <div class="row"><span class="k" style="color:var(--ink)">Medicines</span><span class="v num">&#8377;300</span></div>
-        <div class="row faded"><span class="k">Grooming</span><span class="v num">&#8377;0</span></div>
-      </div>
+      <div class="rows rise" style="--d:3" id="spendRows"></div>
 
       <div class="rise" style="--d:4; margin-top:24px">
-        <button class="btn" id="addExpense">Add expense</button>
+        <button class="btn" data-sheet="add-expense"><svg width="19" height="19"><use href="#i-plus"/></svg>Add expense</button>
       </div>
     </section>
 
@@ -563,29 +645,29 @@
     <section class="screen" id="s-poster" data-name="Lost pet poster &middot; live preview" data-tab="" style="padding-bottom:120px">
       <div class="navbar rise" style="--d:0">
         <button class="back" data-back aria-label="Back"><svg width="22" height="22"><use href="#i-back"/></svg></button>
-        <span class="crumb">Bruno</span>
+        <span class="crumb"><span data-bind="name">Bruno</span></span>
       </div>
       <h1 class="display rise" style="--d:1">Lost poster</h1>
 
       <div class="card rise" style="--d:2; margin-top:20px">
         <p class="eyebrow" style="margin-bottom:14px">Preview</p>
         <div class="poster">
-          <h3>Missing: Bruno</h3>
-          <div class="photo"><svg class="pup" viewBox="0 0 240 200"><use href="#pup"/></svg></div>
-          <p>Indie, male, 4 years, 18 kg. Brown with a white chest patch. Last seen near 5th Block, Koramangala on 20 August, evening. Answers to his name, nervous with strangers.</p>
-          <div class="foot"><b>Call Aarav &middot; 98450 12233</b><span>Reward offered</span></div>
+          <h3>Missing: <span data-bind="name">Bruno</span></h3>
+          <div class="photo"><svg class="pup" viewBox="0 0 240 200"><use class="pet-use" href="#pup-dog"/></svg></div>
+          <p><span data-bind="breed">Indie</span>, <span data-bind="sexLower">male</span>, <span data-bind="age">4 yr</span>, <span data-bind="weight">18.4</span> kg. Brown with a white chest patch. Last seen near <span data-bind="lastSeen">Koramangala 5th Block</span> on 20 August, evening. Answers to <span data-bind="their">his</span> name, nervous with strangers.</p>
+          <div class="foot"><b>Call <span data-bind="owner">Aarav</span> &middot; 98450 12233</b><span>Reward offered</span></div>
         </div>
       </div>
 
       <div class="rows rise" style="--d:3">
-        <div class="row"><span class="k">Last seen</span><span class="v">Koramangala 5th Block</span></div>
-        <div class="row"><span class="k">Reward</span><span class="v num">&#8377;5,000</span></div>
+        <button class="row" data-sheet="last-seen"><span class="k">Last seen</span><span class="v" data-bind="lastSeen">Koramangala 5th Block</span><svg class="chev" width="20" height="20"><use href="#i-chev"/></svg></button>
+        <button class="row" data-sheet="reward"><span class="k">Reward</span><span class="v num">&#8377;<span data-bind="reward">5,000</span></span><svg class="chev" width="20" height="20"><use href="#i-chev"/></svg></button>
         <div class="row"><span class="k">Language</span><span class="v">English + &#3221;&#3240;&#3277;&#3240;&#3233;</span></div>
         <div class="row"><span class="k">Reach</span><span class="v">142 owners within 3 km</span></div>
       </div>
 
       <div class="em-foot" style="background:linear-gradient(180deg,rgba(246,243,236,0),var(--bone) 30%)">
-        <button class="btn pine" data-toast="Poster shared to 3 neighbourhood groups">
+        <button class="btn pine" data-sheet="share-poster">
           <svg width="19" height="19"><use href="#i-share"/></svg>Share poster on WhatsApp</button>
       </div>
     </section>
@@ -594,26 +676,26 @@
     <section class="screen has-tabs" id="s-community" data-name="Community" data-tab="chat">
       <div class="head-row rise" style="--d:0">
         <h1 class="display">Community</h1>
-        <button class="pill" data-toast="Ask the Koramangala circle">Ask</button>
+        <button class="pill" data-sheet="ask-question"><svg width="15" height="15"><use href="#i-plus"/></svg>Ask</button>
       </div>
 
       <div class="post rise" style="--d:1">
         <div class="who"><span class="avatar" style="background:#EFD8D0">P</span><b>Priya &middot; Indiranagar &middot; 2h</b></div>
         <p class="said">Vet in Indiranagar who is good with anxious cats? Mine panics in the carrier.</p>
-        <div class="acts"><b>7 answers</b><button data-toast="Your answer was posted">Answer</button></div>
+        <div class="acts"><b>7 answers</b><button data-answer="1">Answer</button></div>
       </div>
 
       <div class="post rise" style="--d:2">
         <div class="who"><span class="avatar" style="background:#DCE4DA">R</span><b>Rohan &middot; HSR &middot; 5h</b></div>
-        <div class="photo"><svg class="pup" viewBox="0 0 240 200"><use href="#pup"/></svg></div>
+        <div class="photo"><svg class="pup" viewBox="0 0 240 200"><use href="#pup-dog"/></svg></div>
         <p class="said">First monsoon walk. He hated it.</p>
-        <div class="acts"><b>4 replies</b><button data-toast="Liked">Like</button></div>
+        <div class="acts"><b>4 replies</b><button data-like="1">Like</button></div>
       </div>
 
       <div class="post rise" style="--d:3">
         <div class="who"><span class="avatar" style="background:#EFE3C9">M</span><b>Meera &middot; Whitefield &middot; 1d</b></div>
         <p class="said">Two cats and one dog in a 2BHK &mdash; how do you split feeding times so nobody steals?</p>
-        <div class="acts"><b>12 answers</b><button data-toast="Your answer was posted">Answer</button></div>
+        <div class="acts"><b>12 answers</b><button data-answer="1">Answer</button></div>
       </div>
     </section>
 
@@ -631,15 +713,15 @@
       </div>
 
       <div class="rows rise" style="--d:3">
-        <button class="row" data-toast="English, &#3221;&#3240;&#3277;&#3240;&#3233; and &#2361;&#2367;&#2344;&#2381;&#2342;&#2368; available">
+        <button class="row" data-sheet="language">
           <span class="k">Language</span><span class="v">English &middot; &#3221;&#3240;&#3277;&#3240;&#3233; &middot; &#2361;&#2367;&#2344;&#2381;&#2342;&#2368;</span></button>
-        <button class="row" data-toast="Aarav and Meera share this thread">
+        <button class="row" data-sheet="family">
           <span class="k">Family sharing</span><span class="v">2 people</span></button>
-        <button class="row" data-toast="Meals, medicines and vaccines are on">
+        <button class="row" data-sheet="reminders">
           <span class="k">Reminders</span><span class="v">Meals, meds, vaccines</span></button>
         <button class="row" data-toast="Exported Bruno&rsquo;s full history as PDF">
           <span class="k">Export records</span><span class="v">PDF</span></button>
-        <button class="row" data-toast="City Pet Hospital, Dr. Menon, Meera">
+        <button class="row" data-sheet="contacts">
           <span class="k">Emergency contacts</span><span class="v">3 saved</span></button>
       </div>
 
@@ -665,6 +747,13 @@
     </nav>
 
     <div class="home-indicator" id="homeIndicator"></div>
+
+    <!-- bottom sheet: every real action in the app opens one of these -->
+    <div class="scrim" id="scrim"></div>
+    <div class="sheet" id="sheet" role="dialog" aria-modal="true" aria-hidden="true">
+      <div class="grabber"></div>
+      <div class="sheet-scroll" id="sheetBody"></div>
+    </div>
 
     <!-- launch -->
     <div class="boot" id="boot">

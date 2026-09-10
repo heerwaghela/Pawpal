@@ -76,6 +76,26 @@ navigation. Nothing needs a menu.
 | 13 | Community | Neighbourhood questions and answers |
 | 14 | Settings | Language, family sharing, reminders, export |
 
+## It is a real prototype, not a slideshow
+
+Whatever you type in onboarding drives the whole app. Name, owner, species, breed,
+weight, age and sex flow into one state object, and every screen reads from it. Change
+the species and the illustration, the copy and even the pronouns follow.
+
+Every button does something:
+
+| Where | What it does |
+|---|---|
+| Spending | Add expense opens a keypad. The total counts up, the category row updates and the donut redraws segment by segment. Repeatable |
+| Growth | Log a weight and it lands in the list, the headline figure and the emergency card |
+| Feeding | Change the daily portion and the meals and calories recalculate |
+| Vaccinations | Book a slot, the card flips to booked and the booking joins the care thread |
+| Records | File a record and it appears at the top of the history |
+| Community | Ask a question and the post appears. Answer one and the count moves |
+| Profile | Edit details and every screen in the app repaints |
+| Home | Switch pets, or add one, and the thread follows |
+| Emergency | The call button runs a live call timer |
+
 ## Emergency mode
 
 The screen everything else is arranged around. It is reachable from any screen in one
@@ -133,6 +153,9 @@ Animation is used to explain what happened, not to decorate.
 - Figures count up on arrival, with a wall-clock fallback so a stalled frame can never
   leave a half-counted number on screen.
 - The assistant types before it answers, then cascades its three sections in.
+- Anything the owner just added lands with a brief highlight rather than appearing.
+- Going back restores the scroll position and does not replay the entrance, so a
+  return feels like a return rather than a fresh page.
 
 Everything sits behind `prefers-reduced-motion`, and the app is fully usable with all of
 it switched off.

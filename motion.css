@@ -146,15 +146,31 @@
   to{transform:translate3d(-64px,-64px,0)}
 }
 
-/* selectors target the original in <defs>: a <use> shadow tree clones the
-   computed style, so every instance of the dog animates from these rules */
-#pup .tail{transform-origin:40px 132px; animation:wag 1.5s infinite var(--ease)}
+/* Selectors target the originals in <defs>: a <use> shadow tree clones the
+   computed style, so every drawing of the pet animates from these rules.
+   Each species has its own ear anchor, so the flop pivots where it should. */
+.pet-art .tail{transform-origin:40px 132px; animation:wag 1.5s infinite var(--ease)}
 @keyframes wag{0%,100%{transform:rotate(-9deg)} 50%{transform:rotate(13deg)}}
-#pup .ear-l{transform-origin:110px 62px; transform:rotate(-11deg); animation:earflopL 4.2s infinite var(--ease)}
-#pup .ear-r{transform-origin:196px 64px; transform:rotate(9deg); animation:earflopR 4.2s .3s infinite var(--ease)}
-@keyframes earflopL{0%,88%,100%{transform:rotate(-11deg)} 94%{transform:rotate(-19deg)}}
-@keyframes earflopR{0%,88%,100%{transform:rotate(9deg)} 94%{transform:rotate(17deg)}}
-#pup .lid{animation:blink 5.4s infinite}
+
+#pup-dog .ear-l{transform-origin:110px 62px; transform:rotate(-11deg); animation:earDogL 4.2s infinite var(--ease)}
+#pup-dog .ear-r{transform-origin:196px 64px; transform:rotate(9deg); animation:earDogR 4.2s .3s infinite var(--ease)}
+@keyframes earDogL{0%,88%,100%{transform:rotate(-11deg)} 94%{transform:rotate(-19deg)}}
+@keyframes earDogR{0%,88%,100%{transform:rotate(9deg)} 94%{transform:rotate(17deg)}}
+
+#pup-cat .ear-l{transform-origin:130px 54px; animation:earTwitchL 5s infinite var(--ease)}
+#pup-cat .ear-r{transform-origin:174px 54px; animation:earTwitchR 5s .4s infinite var(--ease)}
+@keyframes earTwitchL{0%,90%,100%{transform:none} 95%{transform:rotate(-9deg)}}
+@keyframes earTwitchR{0%,90%,100%{transform:none} 95%{transform:rotate(9deg)}}
+
+#pup-rabbit .ear-l{transform-origin:128px 70px; transform:rotate(-9deg); animation:earBunL 4.6s infinite var(--ease)}
+#pup-rabbit .ear-r{transform-origin:178px 70px; transform:rotate(9deg); animation:earBunR 4.6s .5s infinite var(--ease)}
+@keyframes earBunL{0%,84%,100%{transform:rotate(-9deg)} 90%{transform:rotate(-20deg)} 95%{transform:rotate(-5deg)}}
+@keyframes earBunR{0%,84%,100%{transform:rotate(9deg)} 90%{transform:rotate(20deg)} 95%{transform:rotate(5deg)}}
+
+#pup-bird .wing{animation:flap 3.4s infinite var(--ease)}
+@keyframes flap{0%,86%,100%{transform:none} 91%{transform:rotate(-16deg)} 96%{transform:rotate(4deg)}}
+
+.pet-art .lid{animation:blink 5.4s infinite}
 @keyframes blink{0%,96%,100%{transform:scaleY(0)} 98%{transform:scaleY(1)}}
 
 .poster{animation:none}
@@ -168,6 +184,15 @@
 .btn.working{width:56px; min-width:56px; padding:0; margin:0 auto; display:flex; transition:width 380ms var(--ease)}
 .btn .spinner{width:22px;height:22px;border-radius:50%;border:2.5px solid rgba(255,255,255,.3);border-top-color:#fff;animation:spin 700ms linear infinite}
 .btn.done{background:var(--pine)}
+
+@keyframes amountPop{from{transform:scale(.9)} to{transform:scale(1)}}
+
+/* a row that was just added by the user lands rather than appears */
+@keyframes landRow{
+  from{opacity:0; transform:translateY(-10px); background:rgba(232,163,61,.18)}
+  to{opacity:1; transform:none; background:transparent}
+}
+.row.landed,.vax-item.landed,.entry.landed{animation:landRow 620ms var(--ease) both}
 
 /* ---------- honour the setting ---------- */
 
