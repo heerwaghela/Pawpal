@@ -33,6 +33,7 @@ var toastEl  = $('#toast');
 var current = null;
 var stack   = [];
 var busy    = false;
+var pending = null;
 
 /* ------------------------------------------------------------
    fit the phone to the window
@@ -67,7 +68,9 @@ var CLASSES = {
 };
 
 function go(to, kind) {
-  if (busy || to === current || !screenEl(to)) return;
+  if (to === current || !screenEl(to)) return;
+  /* a tap that lands mid-transition waits its turn rather than being dropped */
+  if (busy) { pending = to; return; }
   kind = kind || kindFor(to);
 
   var inEl  = screenEl(to);
@@ -99,6 +102,7 @@ function go(to, kind) {
     outEl.classList.remove('is-moving', cls[1]);
     busy = false;
     settle(inEl);
+    if (pending) { var p = pending; pending = null; go(p); }
   };
   var t = setTimeout(done, 700);
   inEl.addEventListener('animationend', function h() {

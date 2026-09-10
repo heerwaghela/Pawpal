@@ -19,10 +19,24 @@ Fourteen screens. Fully clickable. No build step, no dependencies, no internet.
 git clone https://github.com/heerwaghela/Pawpal.git
 ```
 
-Then open `index.html` in Chrome. That is the whole setup.
+Then open `index.html` in a browser. That is the whole setup.
 
 There is no `npm install`, no bundler and no server. The typefaces are embedded in the
 CSS as base64, so the app renders identically on a laptop that has never been online.
+
+### Moving it to another machine
+
+`index.html` needs its four sibling files next to it. Copy the **whole folder**, or send
+someone `pawpal-standalone.html` instead, which is the entire app folded into one file:
+markup, styles, animations, script and both typefaces. Email it, drop it on a USB stick,
+open it from a Downloads folder on its own. It makes exactly one network request, for
+itself.
+
+Rebuild it after editing any source file:
+
+```bash
+python build.py
+```
 
 ## The idea
 
@@ -142,11 +156,13 @@ All of it is hidden until pressed, and everything is tappable with a mouse.
 
 ```
 Pawpal/
-├── index.html    All 14 screens, the device frame, the icon sprite
-├── styles.css    Tokens, layout, components, per-screen styles
-├── motion.css    Every keyframe and transition
-├── app.js        Router, back stack, gestures, counters, charts
-└── fonts.css     Fraunces and Inter as base64 woff2
+├── index.html               All 14 screens, the device frame, the icon sprite
+├── styles.css               Tokens, layout, components, per-screen styles
+├── motion.css               Every keyframe and transition
+├── app.js                   Router, back stack, gestures, counters, charts
+├── fonts.css                Fraunces and Inter as base64 woff2
+├── build.py                 Folds the five files above into one
+└── pawpal-standalone.html   Generated. The whole app in a single file
 ```
 
 Roughly 1,500 lines of hand-written HTML, CSS and JavaScript. No framework.
@@ -159,6 +175,8 @@ Roughly 1,500 lines of hand-written HTML, CSS and JavaScript. No framework.
   nothing else.
 - **No image files.** The dog, the paw pattern, every icon and both charts are inline SVG
   or CSS, which is why the whole app is five text files.
+- **Wide browser support.** ES5 only, with longhand fallbacks alongside every modern CSS
+  shorthand, so it renders on browsers several years out of date.
 - **Indian defaults**, because that is who it is for: rupees, Kannada and Hindi alongside
   English, and a lost-pet poster built for WhatsApp rather than a printer.
 
